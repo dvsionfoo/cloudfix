@@ -1,0 +1,45 @@
+POST https://eyuj4nlfoc.execute-api.us-east-1.amazonaws.com/default/auth/register
+Content-Type: application/json
+
+{
+    "username": "boris.vanin+1@aurea.com",
+    "password": "Qwerty123",
+    "company": "test",
+    "phoneNumber": "1234567",
+    "name": "Boris Vanin"
+}
+POST https://eyuj4nlfoc.execute-api.us-east-1.amazonaws.com/default/auth/login
+Content-Type: application/json
+
+{
+    "username": "boris.vanin+1@aurea.com",
+    "password": "Qwerty123"
+}
+
+
+{
+    "id": 7,
+    "username": "badri.varadarajan@gmail.com",
+    "name": "Badri Varadarajan",
+    "companyName": "test 2",
+    "phoneNumber": "123456789",
+    "role": "TENANT_ADMIN"
+}
+
+"accountId": "ACCOUNT",
+                "annualSavings": 10000,
+                "applicationEnvironment": "App Env",
+                "generatedDate": "Gen Date",
+                "customerId": 1,
+                "opportunityDescription": "Recommendation",
+                "id": "ID",
+                "opportunityId": "Opp ID",
+                "otherImpactedNodeIds": [
+                    "Node 1", "Node 2"
+                ],
+                "primaryImpactedNodeId": "Prim Node ID",
+                "resourceId": "TARGET",
+                "scheduledAt": "Scheduled At",
+                "status": "STATE",
+                "opportunityType": "Recommendation",
+                "lastUpdatedDate": "Last Updated"
