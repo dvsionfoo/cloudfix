@@ -23,6 +23,23 @@ body {
   background: rgba(238, 241, 245, 0.42);
 }
 
+.sortArrowContainer {
+  display: flex;
+  margin-bottom: 8px;
+  align-items: center;
+
+  .sortArrows {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+
+    img {
+      cursor: pointer;
+      margin-top: 3px;
+    }
+  }
+}
+
 .bareLayout {
   &.register {
     height: auto;
