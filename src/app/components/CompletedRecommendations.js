@@ -1,9 +1,10 @@
 import React, {useState} from "react";
-import {Badge} from "react-bootstrap";
+import {Button, Input, Space, Tag, Table} from 'antd';
+import 'antd/dist/antd.css';
+import {FilterOutlined} from '@ant-design/icons';
+import Highlighter from 'react-highlight-words';
 
 import {RecommendationActions} from './RecommendationActions';
-import {FormatNumber} from "./../helpers";
-import {filterRecommendationData, sortColumnData} from './../helpers/SortingAndFilterHelpers'
 
 export const CompletedRecommendations = ({recommendations, onActionClick}) => {
 
@@ -13,101 +14,144 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
         onActionClick([recommendationId], actionType);
     };
 
-    const sortColumn = (sortColumn, sortType) => {
-        setTableData(sortColumnData(sortColumn, sortType, tableData));
+    const [filterState, setFilterState] = useState({
+        searchText: '',
+        searchedColumn: '',
+    });
+
+    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setFilterState({
+            searchText: selectedKeys[0],
+            searchedColumn: dataIndex,
+        });
     };
 
-    const filterColumn = (event, filterOn) => {
-        setTableData(filterRecommendationData(filterOn, event, recommendations));
+    const handleReset = clearFilters => {
+        clearFilters();
+        setFilterState({...filterState, searchText: ''})
     };
 
+    const getColumnSearchProps = dataIndex => ({
+        filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
+            <div style={{padding: 8}}>
+                <Input
+                    placeholder={`Search ${dataIndex}`}
+                    value={selectedKeys[0]}
+                    onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                    onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                    style={{width: 188, marginBottom: 8, display: 'block'}}
+                />
+                <Space>
+                    <Button
+                        type="primary"
+                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                        icon={<FilterOutlined/>}
+                        size="small"
+                        style={{width: 90}}
+                    >
+                        Search
+                    </Button>
+                    <Button onClick={() => handleReset(clearFilters)} size="small" style={{width: 90}}>
+                        Reset
+                    </Button>
+                    <Button
+                        type="link"
+                        size="small"
+                        onClick={() => {
+                            confirm({closeDropdown: false});
+                            setFilterState({
+                                searchText: selectedKeys[0],
+                                searchedColumn: dataIndex,
+                            });
+                        }}>
+                        Filter
+                    </Button>
+                </Space>
+            </div>
+        ),
+        filterIcon: filtered => <FilterOutlined style={{color: filtered ? '#1890ff' : undefined}}/>,
+        onFilter: (value, record) =>
+            record[dataIndex]
+                ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
+                : '',
+        render: text =>
+            filterState.searchedColumn === dataIndex ? (
+                <Highlighter
+                    highlightStyle={{backgroundColor: '#ffc069', padding: 0}}
+                    searchWords={[filterState.searchText]}
+                    autoEscape
+                    textToHighlight={text ? text.toString() : ''}
+                />
+            ) : (
+                text
+            )
+    });
+    const columns = [
+        {
+            title: 'RECOMMENDATION',
+            dataIndex: 'opportunityDescription',
+            key: 'opportunityDescription',
+            width: '25%',
+        },
+        {
+            title: 'RESOURCE ID',
+            dataIndex: 'resourceId',
+            key: 'resourceId',
+            ...getColumnSearchProps('resourceId'),
+            sorter: (a, b) => a.resourceId.length - b.resourceId.length
+        },
+        {
+            title: 'ACCOUNT',
+            dataIndex: 'accountId',
+            key: 'accountId',
+            ...getColumnSearchProps('accountId'),
+            sorter: (a, b) => a.accountId.length - b.accountId.length
+        },
+        {
+            title: 'REGION',
+            dataIndex: 'region',
+            key: 'region',
+            ...getColumnSearchProps('region'),
+            sorter: (a, b) => a.region.length - b.region.length
+        },
+        {
+            title: 'SAVINGS',
+            dataIndex: 'annualSavings',
+            key: 'annualSavings',
+        },
+        {
+            title: 'STATUS',
+            dataIndex: 'status',
+            key: 'status',
+            render: status => (
+                <>
+                    <Tag color={'#6993FF'} key={status}>{status.toUpperCase()}</Tag>
+                </>
+            )
+        },
+        {
+            title: 'ACTION',
+            dataIndex: 'action',
+            key: 'action',
+            width: "136",
+            render: (text, recommendation) => (
+                <RecommendationActions
+                    recommendationId={recommendation.id}
+                    onAction={handleOnAction}
+                    recommendationType="Completed"
+                    lastExecutionDate={recommendation.scheduledAt}
+                />
+            )
+        },
+    ];
     return (
         <>
-
             {
                 (!tableData || tableData.length === 0) ? (
                     <p>No fixes! Go to new recommendations tab to get started.</p>
                 ) : (
-                    <div className="table-responsive">
-                        <table
-                            className="table table-head-custom table-vertical-center"
-                            id="kt_advance_table_widget_1"
-                        >
-                            <thead>
-                            <tr className="text-left">
-                                <th>RECOMMENDATION</th>
-                                <th>{<>
-                                    <div className="sortArrowContainer">RESOURCE ID
-                                        <div className="sortArrows">
-                                            <img src={"/media/up-arrow.svg"}
-                                                 onClick={() => sortColumn('resourceId', 'asc')} alt="icon"/>
-                                            <img src={"/media/down-arrow.svg"}
-                                                 onClick={() => sortColumn('resourceId', 'desc')}
-                                                 alt="icon"/>
-                                        </div>
-                                    </div>
-                                    <input onChange={(event) => filterColumn(event, 'resourceId')}
-                                           placeholder="Search Resource Id"/></>}</th>
-                                <th>{
-                                    <>
-                                        <div className="sortArrowContainer">ACCOUNT
-                                            <div className="sortArrows">
-                                                <img src={"/media/up-arrow.svg"}
-                                                     onClick={() => sortColumn('accountId', 'asc')}
-                                                     alt="icon"/>
-                                                <img src={"/media/down-arrow.svg"}
-                                                     onClick={() => sortColumn('accountId', 'desc')}
-                                                     alt="icon"/>
-                                            </div>
-                                        </div>
-                                        <input onChange={(event) => filterColumn(event, 'accountId')}
-                                               placeholder="Search Account"/></>
-                                }</th>
-                                <th>{
-                                    <>
-                                        <div className="sortArrowContainer">REGION
-                                            <div className="sortArrows">
-                                                <img src={"/media/up-arrow.svg"}
-                                                     onClick={() => sortColumn('region', 'asc')}
-                                                     alt="icon"/>
-                                                <img src={"/media/down-arrow.svg"}
-                                                     onClick={() => sortColumn('region', 'desc')}
-                                                     alt="icon"/>
-                                            </div>
-                                        </div>
-                                        <input onChange={(event) => filterColumn(event, 'region')}
-                                               placeholder="Search Region"/></>
-                                }</th>
-                                <th>SAVINGS</th>
-                                <th>STATUS</th>
-                                <th>ACTIONS</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {tableData.map((recommendation, index) => (
-                                <tr key={index}>
-                                    <td>{recommendation.opportunityDescription}</td>
-                                    <td>{recommendation.resourceId}</td>
-                                    <td>{recommendation.accountId}</td>
-                                    <td>{recommendation.region}</td>
-                                    <td>${FormatNumber(recommendation.annualSavings)}</td>
-                                    <td><Badge pill variant="primary">{recommendation.status}</Badge></td>
-                                    <td>
-                                        <div style={{width: "120px"}}>
-                                            <RecommendationActions
-                                                recommendationId={recommendation.id}
-                                                onAction={handleOnAction}
-                                                recommendationType="Completed"
-                                                lastExecutionDate={recommendation.scheduledAt}
-                                            />
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-
-                            </tbody>
-                        </table>
-                    </div>
+                      <Table pagination={false} columns={columns} dataSource={recommendations}/>
                 )
             }
         </>

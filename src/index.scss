@@ -23,20 +23,13 @@ body {
   background: rgba(238, 241, 245, 0.42);
 }
 
-.sortArrowContainer {
-  display: flex;
-  margin-bottom: 8px;
-  align-items: center;
-
-  .sortArrows {
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px;
-
-    img {
-      cursor: pointer;
-      margin-top: 3px;
-    }
+.ant-btn .anticon svg{
+  margin-bottom: 4px;
+}
+.scheduledSelection{
+  margin-right: 8px;
+  img{
+    margin: 0 4px 2px 0;
   }
 }
 
@@ -298,7 +291,7 @@ img.actionLink {
   .card-body {
     min-height: 400px;
     .actionLink {
-      margin-left: 10px;
+      margin-right: 8px;
       cursor: pointer;
       &.disabled {
         opacity: 0.2;
