@@ -99,21 +99,21 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
             dataIndex: 'resourceId',
             key: 'resourceId',
             ...getColumnSearchProps('resourceId'),
-            sorter: (a, b) => a.resourceId.length - b.resourceId.length
+            sorter: (a, b) =>  a.resourceId.localeCompare(b.resourceId)
         },
         {
             title: 'ACCOUNT',
             dataIndex: 'accountId',
             key: 'accountId',
             ...getColumnSearchProps('accountId'),
-            sorter: (a, b) => a.accountId.length - b.accountId.length
+            sorter: (a, b) => a.accountId.localeCompare(b.accountId)
         },
         {
             title: 'REGION',
             dataIndex: 'region',
             key: 'region',
             ...getColumnSearchProps('region'),
-            sorter: (a, b) => a.region.length - b.region.length
+            sorter: (a, b) => a.region.localeCompare(b.region)
         },
         {
             title: 'SAVINGS',

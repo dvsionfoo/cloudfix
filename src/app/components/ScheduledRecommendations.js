@@ -1,9 +1,8 @@
-import React, {useState} from "react";
-import {Button} from "react-bootstrap";
+import React, {useEffect, useState} from "react";
 
 import {toAbsoluteUrl} from "./../helpers";
 import {RecommendationActions} from './RecommendationActions';
-import {Input, Space, Table} from "antd";
+import {Button, Input, Space, Table} from "antd";
 import {FilterOutlined} from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 
@@ -15,7 +14,15 @@ export const ScheduledRecommendations = ({recommendations, onActionClick}) => {
                 setSelectedRecommendations(selectedRowKeys);
             }
         };
-        const [tableData, setTableData] = useState(recommendations);
+        const [tableData, setTableData] = useState([]);
+
+        useEffect(() => {
+            let tempData = [];
+            recommendations.forEach(itr => {
+                tempData.push({...itr, key: itr.id});
+            });
+            setTableData(tempData);
+        }, []);
 
         const handleBulkAction = (actionType) => () => {
             setSelectedRecommendations([]);
@@ -111,21 +118,21 @@ export const ScheduledRecommendations = ({recommendations, onActionClick}) => {
                 dataIndex: 'resourceId',
                 key: 'resourceId',
                 ...getColumnSearchProps('resourceId'),
-                sorter: (a, b) => a.resourceId.length - b.resourceId.length
+                sorter: (a, b) => a.resourceId.localeCompare(b.resourceId)
             },
             {
                 title: 'ACCOUNT',
                 dataIndex: 'accountId',
                 key: 'accountId',
                 ...getColumnSearchProps('accountId'),
-                sorter: (a, b) => a.accountId.length - b.accountId.length
+                sorter: (a, b) => a.accountId.localeCompare(b.accountId)
             },
             {
                 title: 'REGION',
                 dataIndex: 'region',
                 key: 'region',
                 ...getColumnSearchProps('region'),
-                sorter: (a, b) => a.region.length - b.region.length
+                sorter: (a, b) => a.region.localeCompare(b.region)
             },
             {
                 title: 'SAVINGS',
@@ -150,7 +157,7 @@ export const ScheduledRecommendations = ({recommendations, onActionClick}) => {
         return (
             <>
                 {
-                    (!tableData || tableData.length === 0) ? (
+                    (!recommendations || recommendations.length === 0) ? (
                         <p>No scheduled fixes yet! Go to new recommendations tab to start scheduling.</p>
                     ) : (
                         <div className="table-responsive">
@@ -193,7 +200,7 @@ export const ScheduledRecommendations = ({recommendations, onActionClick}) => {
                             }
                             <Table showHeader={selectedRecommendations.length <= 0} rowSelection={{...rowSelection}}
                                    pagination={false} columns={columns}
-                                   dataSource={recommendations}/>
+                                   dataSource={tableData}/>
                         </div>
                     )
                 }
