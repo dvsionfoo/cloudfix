@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import {NewRecommendations} from './NewRecommendations';
 import {ScheduledRecommendations} from './ScheduledRecommendations';
 import {CompletedRecommendations} from './CompletedRecommendations';
+import {InprogressRecommendations} from './InprogressRecommendations';
 import {RECOMMENDATIONS_URL} from './../../app/appConfig';
 import {actions} from './../../redux/appReducers';
 import { ScheduleExecution } from './ScheduleExecution';
@@ -34,7 +35,14 @@ function Recommendations(props) {
       setShowInfoModal(true);
     }
 
-  const {userDetails, completedRecommendations, newRecommendations, scheduledRecommendations, recommendations, allRecommendations} = props;
+  const {userDetails, 
+      completedRecommendations, 
+      newRecommendations, 
+      scheduledRecommendations, 
+      recommendations, 
+      inprogressRecommendations, 
+      allRecommendations} = props;
+
   const [key, setKey] = useState("new");
 
   const enableLoading = () => {
@@ -156,6 +164,15 @@ const getScheduledDate = (date = undefined) => {
               </Nav.Item>
               <Nav.Item className="nav-item" as="li">
                 <Nav.Link
+                  eventKey="inprogress"
+                  className={`nav-link py-2 px-4 ${key === "Inprogress" ? "active" : ""
+                    }`}
+                >
+                  In-progress
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item className="nav-item" as="li">
+                <Nav.Link
                   eventKey="completed"
                   className={`nav-link py-2 px-4 ${key === "Completed" ? "active" : ""
                     }`}
@@ -189,6 +206,13 @@ const getScheduledDate = (date = undefined) => {
               recommendations={completedRecommendations} 
               onActionClick={handleRecommendationAction} 
               />)}
+          { key === 'inprogress' && completedRecommendations && (
+            <InprogressRecommendations 
+              recommendations={inprogressRecommendations} 
+              onActionClick={handleRecommendationAction} 
+              />)}
+
+              
           <ScheduleExecution 
             show={scheduleModal} 
             onHide={hideScheduleModal} 
@@ -196,11 +220,11 @@ const getScheduledDate = (date = undefined) => {
             handleActionClick={handleScheduleExecutionAction}
             />
 
-            <RecommendationInfo 
-              recommendation={allRecommendations && allRecommendations.length > 0 && allRecommendations.find(element => element.id === recommendationsData[0])} 
-              show={infoModal}
-              onHide={hideInfoModal} 
-            />
+          <RecommendationInfo 
+            recommendation={allRecommendations && allRecommendations.length > 0 && allRecommendations.find(element => element.id === recommendationsData[0])} 
+            show={infoModal}
+            onHide={hideInfoModal} 
+          />
       </div>
       {/* end::Body */}
     </div>
@@ -208,8 +232,8 @@ const getScheduledDate = (date = undefined) => {
 }
 
 function mapStateToProps(state) {
-  const { newRecommendations, scheduledRecommendations, completedRecommendations, allRecommendations } = state.cloudFix.recommendations;
-  return { newRecommendations, scheduledRecommendations, completedRecommendations, allRecommendations }
+  const { newRecommendations, scheduledRecommendations, completedRecommendations, inprogressRecommendations, allRecommendations } = state.cloudFix.recommendations;
+  return { newRecommendations, scheduledRecommendations, completedRecommendations, inprogressRecommendations, allRecommendations }
 }
 
 export default connect(mapStateToProps, actions)(Recommendations);

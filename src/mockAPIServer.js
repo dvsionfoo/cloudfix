@@ -228,6 +228,82 @@ var mockServer = {
                     "lastUpdatedDate": "2021-02-02T19:11:18.898Z"
                 },
                 {
+                    "id": "01cb1d61-42cb-4e2a-ba6d-fe7d19dfaa6a",
+                    "region": "us-east-1",
+                    "primaryImpactedNodeId": "052072550456/AWS::EC2::Volume/vol-073a037af3dc1dda2",
+                    "otherImpactedNodeIds": [
+                        "052072550456/AWS::EC2::Instance/i-01de1f7b0bc18499f"
+                    ],
+                    "resourceId": "vol-073a037af3dc1dda2",
+                    "difficulty": 1,
+                    "risk": 1,
+                    "applicationEnvironment": "crm:test",
+                    "annualSavings": 4.80,
+                    "annualCost": 24.00,
+                    "status": "In-progress",
+                    "scheduledAt": "2021-02-06T08:31:17.298Z",
+                    "parameters": {
+                        "VolumeSize": 20,
+                        "VolumeType": "gp2"
+                    },
+                    "customerId": 31,
+                    "accountId": "052072550456",
+                    "opportunityType": "Gp2Gp3",
+                    "opportunityDescription": "Update EBS volume from gp2 to gp3.",
+                    "generatedDate": "2021-01-29T15:48:36.327022Z",
+                    "lastUpdatedDate": "2021-01-29T15:48:36.327166Z"
+                },
+                {
+                    "id": "62611a4c-0a8d-4d19-ba4c-3a3759363a35",
+                    "region": "us-east-1",
+                    "primaryImpactedNodeId": "052072550456/AWS::EC2::Volume/vol-0354b13ac9387f591",
+                    "otherImpactedNodeIds": [
+                        "052072550456/AWS::EC2::Instance/i-0e77091a9eac8f999"
+                    ],
+                    "resourceId": "vol-0354b13ac9387f591",
+                    "difficulty": 1,
+                    "risk": 2,
+                    "applicationEnvironment": "crm:test",
+                    "annualSavings": 4.80,
+                    "annualCost": 24.00,
+                    "status": "inprogress",
+                    "parameters": {
+                        "VolumeSize": 20,
+                        "VolumeType": "gp2"
+                    },
+                    "customerId": 31,
+                    "accountId": "052072550456",
+                    "opportunityType": "Gp2Gp3",
+                    "opportunityDescription": "Update EBS volume from gp2 to gp3.",
+                    "generatedDate": "2021-01-29T15:48:36.327244Z",
+                    "lastUpdatedDate": "2021-02-02T20:11:39.576Z"
+                },
+                {
+                    "id": "6332e6c2-6a39-4771-8d1d-51680ca272f5",
+                    "region": "us-east-1",
+                    "primaryImpactedNodeId": "052072550456/AWS::EC2::Volume/vol-0a06cf0cd743576e6",
+                    "otherImpactedNodeIds": [
+                        "052072550456/AWS::EC2::Instance/i-04790a551da08b60c"
+                    ],
+                    "resourceId": "vol-0a06cf0cd743576e6",
+                    "difficulty": 1,
+                    "risk": 3,
+                    "applicationEnvironment": "crm:test",
+                    "annualSavings": 30.72,
+                    "annualCost": 153.60,
+                    "status": "Inprogress",
+                    "parameters": {
+                        "VolumeSize": 128,
+                        "VolumeType": "gp2"
+                    },
+                    "customerId": 31,
+                    "accountId": "052072550456",
+                    "opportunityType": "Gp2Gp3",
+                    "opportunityDescription": "Update EBS volume from gp2 to gp3.",
+                    "generatedDate": "2021-01-29T15:48:36.327391Z",
+                    "lastUpdatedDate": "2021-02-02T19:11:18.898Z"
+                },
+                {
                     "id": "68f8cde1-85f9-42b9-825c-d359801a4150",
                     "region": "us-east-1",
                     "primaryImpactedNodeId": "052072550456/AWS::EC2::Volume/vol-03b640cc2676e9a3b",

@@ -25,8 +25,6 @@ export function ScheduleExecution(props) {
     return new Date(dateObject).toString() !== 'Invalid Date';
   };
 
-  const recommendation = recommendations[0];
-
   const enableLoading = () => {
     setLoading(true);
   };
@@ -34,10 +32,10 @@ export function ScheduleExecution(props) {
   const disableLoading = () => {
     setLoading(false);
   };
-  const sendScheduleDate = (recommendation) => () => {
+  const sendScheduleDate = () => {
     enableLoading();
     setError(`Scheduling your request...`);
-    handleActionClick([recommendation], new Date(scheduleDate).toISOString());
+    handleActionClick(recommendations, new Date(scheduleDate).toISOString());
   }
 
   const handleExit = () => {
@@ -94,7 +92,7 @@ export function ScheduleExecution(props) {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="outline-primary" onClick={onHide}>Cancel</Button>
-        <Button variant="success" disabled={!isValidDate(scheduleDate) || loading} onClick={sendScheduleDate(recommendation)}>Schedule {loading && <span style={{ 'marginRight': '10px' }} className="ml-3 spinner spinner-white"></span>}</Button>
+        <Button variant="success" disabled={!isValidDate(scheduleDate) || loading} onClick={sendScheduleDate}>Schedule {loading && <span style={{ 'marginRight': '10px' }} className="ml-3 spinner spinner-white"></span>}</Button>
       </Modal.Footer>
     </Modal>
   );

@@ -24,6 +24,7 @@ const initialAuthState = {
     newRecommendations: undefined,
     completedRecommendations: undefined,
     scheduledRecommendations: undefined,
+    inprogressRecommendations: undefined,
     allRecommendations: undefined
   },
   totalAccounts: 0,
@@ -60,7 +61,15 @@ export const reducer = (state = enrichedAuthState, action) => {
         const completedRecommendations = recommendations.filter(r => { 
             return r.status.toLowerCase() !== 'suggested' && r.status.toLowerCase() !== 'scheduled';
         });
-        return { ...state, recommendations: {newRecommendations, scheduledRecommendations, completedRecommendations, allRecommendations: recommendations}};
+        const inprogressRecommendations = recommendations.filter(r => r.status.toLowerCase() === 'in progress');
+        return { ...state, recommendations: {
+                                newRecommendations, 
+                                scheduledRecommendations, 
+                                completedRecommendations, 
+                                inprogressRecommendations, 
+                                allRecommendations: recommendations
+                              }
+                };
       }
 
       case actionTypes.Savings: {

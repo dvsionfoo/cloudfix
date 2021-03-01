@@ -1,10 +1,9 @@
 import React from "react";
-import { Badge } from "react-bootstrap";
 
 import { RecommendationActions } from './RecommendationActions';
 import { FormatNumber } from "./../helpers";
 
-export const CompletedRecommendations = ({ recommendations, onActionClick }) => {
+export const InprogressRecommendations = ({ recommendations, onActionClick }) => {
 
   const handleOnAction = (recommendationId, actionType = 'now') => {
     onActionClick([recommendationId], actionType);
@@ -15,7 +14,7 @@ export const CompletedRecommendations = ({ recommendations, onActionClick }) => 
 
       {
         (!recommendations || recommendations.length === 0) ? (
-          <p>No fixes! Go to new recommendations tab to get started.</p>
+          <p>Nothing in-progress now! Go to new recommendations tab to get started.</p>
         ) : (
             <div className="table-responsive">
               <table
@@ -29,7 +28,6 @@ export const CompletedRecommendations = ({ recommendations, onActionClick }) => 
                     <th>ACCOUNT</th>
                     <th>REGION</th>
                     <th>SAVINGS</th>
-                    <th>STATUS</th>
                     <th>ACTIONS</th>
                   </tr>
                 </thead>
@@ -41,7 +39,6 @@ export const CompletedRecommendations = ({ recommendations, onActionClick }) => 
                       <td>{recommendation.accountId}</td>
                       <td>{recommendation.region}</td>
                       <td>${FormatNumber(recommendation.annualSavings)}</td>
-                      <td><Badge pill variant="primary">{recommendation.status}</Badge></td>
                       <td> <div style={{ width: "120px" }}>
                         <RecommendationActions
                           recommendationId={recommendation.id}

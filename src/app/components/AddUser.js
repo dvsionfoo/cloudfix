@@ -11,7 +11,7 @@ export function AddUser(props) {
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >
-          <LinkAccount />
+          <LinkAccount onAddAccount={onHide} />
           <p className="addAccountsClose"><Button onClick={onHide} variant="outline-primary">Close</Button></p>
         </Modal>
       );

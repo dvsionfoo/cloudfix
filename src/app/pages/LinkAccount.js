@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { toAbsoluteUrl } from "./../helpers";
 import { GET_RUN_TEMPLATE_URL, GET_ACCOUNTS_URL, LOCAL_STORAGE_KEY, STEP_BY_STEP_GUIDE } from './../../app/appConfig';
 import { actions } from './../../redux/appReducers';
 
 export function LinkAccount(props) {
     let history = useHistory();
+    const locationName = useLocation().pathname.substr(1);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState();
     let polling = null;
@@ -44,7 +45,7 @@ export function LinkAccount(props) {
             //Remove timer, set accoutns & Redirect to dashboard
             props.accounts(response.data);
             clearInterval(polling);
-            history.push('/dashboard');
+            locationName === 'accounts' ? props.onAddAccount() : history.push('/dashboard');
           } else if (pollRequestCount >= maxRetries) {
             //Remove timer & show error
             clearInterval(polling);
