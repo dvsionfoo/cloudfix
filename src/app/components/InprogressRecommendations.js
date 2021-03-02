@@ -14,7 +14,7 @@ export const InprogressRecommendations = ({ recommendations, onActionClick }) =>
 
       {
         (!recommendations || recommendations.length === 0) ? (
-          <p>Nothing in-progress now! Go to new recommendations tab to get started.</p>
+          <p>Nothing In Progress now! Go to new recommendations tab to get started.</p>
         ) : (
             <div className="table-responsive">
               <table

@@ -240,7 +240,7 @@ var mockServer = {
                     "applicationEnvironment": "crm:test",
                     "annualSavings": 4.80,
                     "annualCost": 24.00,
-                    "status": "In-progress",
+                    "status": "In progress",
                     "scheduledAt": "2021-02-06T08:31:17.298Z",
                     "parameters": {
                         "VolumeSize": 20,
@@ -266,7 +266,7 @@ var mockServer = {
                     "applicationEnvironment": "crm:test",
                     "annualSavings": 4.80,
                     "annualCost": 24.00,
-                    "status": "inprogress",
+                    "status": "in progress",
                     "parameters": {
                         "VolumeSize": 20,
                         "VolumeType": "gp2"
@@ -291,7 +291,7 @@ var mockServer = {
                     "applicationEnvironment": "crm:test",
                     "annualSavings": 30.72,
                     "annualCost": 153.60,
-                    "status": "Inprogress",
+                    "status": "In progress",
                     "parameters": {
                         "VolumeSize": 128,
                         "VolumeType": "gp2"

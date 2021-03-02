@@ -168,7 +168,7 @@ const getScheduledDate = (date = undefined) => {
                   className={`nav-link py-2 px-4 ${key === "Inprogress" ? "active" : ""
                     }`}
                 >
-                  In-progress
+                  In progress
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item className="nav-item" as="li">
