@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 
-import {FormatNumber, toAbsoluteUrl} from "./../helpers";
+import {toAbsoluteUrl} from "./../helpers";
 import {RecommendationActions} from './RecommendationActions';
-import {Input, Space, Table, Tag, Button} from "antd";
+import {Button, Input, Space, Table} from "antd";
 import {FilterOutlined} from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 
@@ -11,7 +11,7 @@ export const NewRecommendations = ({recommendations, onActionClick}) => {
     const [selectedRecommendations, setSelectedRecommendations] = useState([]);
 
     const rowSelection = {
-        onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
+        onChange: (selectedRowKeys , selectedRows: DataType[]) => {
             setSelectedRecommendations(selectedRowKeys);
         }
     };
@@ -20,7 +20,7 @@ export const NewRecommendations = ({recommendations, onActionClick}) => {
     useEffect(() => {
         let tempData = [];
         recommendations.forEach(itr => {
-            tempData.push({...itr, key:itr.id});
+            tempData.push({...itr, key: itr.id});
         });
         setTableData(tempData);
     }, []);
@@ -164,38 +164,38 @@ export const NewRecommendations = ({recommendations, onActionClick}) => {
                     <div className="table-responsive">
                         {
                             selectedRecommendations.length > 0 ? (
-                                    <div className="bulkActions" colSpan="6">
-                                        <div style={{width: "500px"}}>
-                                            <Button variant="outline-secondary" onClick={handleBulkAction('now')}>
-                                                <img
-                                                    alt="action"
-                                                    className="actionLink"
-                                                    src={toAbsoluteUrl("/media/run.png")}
-                                                />
-                                                <span>RUN NOW</span>
-                                            </Button>
-                                            <Button variant="outline-secondary"
-                                                    onClick={handleBulkAction('schedule')}>
-                                                <img
-                                                    alt="action"
-                                                    className="actionLink"
-                                                    src={toAbsoluteUrl("/media/schedule.png")}
-                                                />
-                                                <span>SCHEDULE</span>
-                                            </Button>
-                                            <Button variant="outline-secondary"
-                                                    onClick={handleBulkAction('cancel')}>
-                                                <img
-                                                    alt="action"
-                                                    className="actionLink"
-                                                    src={toAbsoluteUrl("/media/delete.png")}
-                                                />
-                                                <span>IGNORE</span>
-                                            </Button>
-                                        </div>
-                                        <br/>
+                                <div className="bulkActions" colSpan="6">
+                                    <div style={{width: "500px"}}>
+                                        <Button variant="outline-secondary" onClick={handleBulkAction('now')}>
+                                            <img
+                                                alt="action"
+                                                className="actionLink"
+                                                src={toAbsoluteUrl("/media/run.png")}
+                                            />
+                                            <span>RUN NOW</span>
+                                        </Button>
+                                        <Button variant="outline-secondary"
+                                                onClick={handleBulkAction('schedule')}>
+                                            <img
+                                                alt="action"
+                                                className="actionLink"
+                                                src={toAbsoluteUrl("/media/schedule.png")}
+                                            />
+                                            <span>SCHEDULE</span>
+                                        </Button>
+                                        <Button variant="outline-secondary"
+                                                onClick={handleBulkAction('cancel')}>
+                                            <img
+                                                alt="action"
+                                                className="actionLink"
+                                                src={toAbsoluteUrl("/media/delete.png")}
+                                            />
+                                            <span>IGNORE</span>
+                                        </Button>
                                     </div>
-                                ) : null}
+                                    <br/>
+                                </div>
+                            ) : null}
                         <Table showHeader={selectedRecommendations.length <= 0} rowSelection={{...rowSelection}}
                                pagination={false} columns={columns}
                                dataSource={tableData}/>

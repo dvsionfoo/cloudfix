@@ -6,8 +6,7 @@
 @import "./theme/_assets/sass/style.react.scss";
 
 body {
-  background: #F4F4F4 url("/media/bg/dashboard-bg.png") no-repeat;
-  background-position: 0% 60px;
+  background: #F4F4F4 url("/media/bg/dashboard-bg.png") no-repeat 0% 60px;
   background-size: contain;
 }
 
@@ -39,8 +38,7 @@ body {
   }
   width: 100%;
   height: 110vh;
-  background: #037ADE url("/media/bg/site-bg.png");
-  background-repeat: no-repeat;
+  background: #037ADE url("/media/bg/site-bg.png") no-repeat;
   background-size: cover;
   display: flex;
   align-items: center;

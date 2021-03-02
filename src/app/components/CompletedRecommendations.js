@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Input, Space, Tag, Table} from 'antd';
 import 'antd/dist/antd.css';
 import {FilterOutlined} from '@ant-design/icons';
@@ -8,7 +8,7 @@ import {RecommendationActions} from './RecommendationActions';
 
 export const CompletedRecommendations = ({recommendations, onActionClick}) => {
 
-    const [tableData, setTableData] = useState(recommendations);
+    const [tableData, setTableData] = useState([]);
 
     const handleOnAction = (recommendationId, actionType = 'now') => {
         onActionClick([recommendationId], actionType);
@@ -31,6 +31,14 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
         clearFilters();
         setFilterState({...filterState, searchText: ''})
     };
+
+    useEffect(() => {
+        let tempData = [];
+        recommendations.forEach(itr => {
+            tempData.push({...itr, key: itr.id});
+        });
+        setTableData(tempData);
+    }, []);
 
     const getColumnSearchProps = dataIndex => ({
         filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
@@ -148,10 +156,10 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
     return (
         <>
             {
-                (!tableData || tableData.length === 0) ? (
+                (!recommendations || recommendations.length === 0) ? (
                     <p>No fixes! Go to new recommendations tab to get started.</p>
                 ) : (
-                      <Table pagination={false} columns={columns} dataSource={recommendations}/>
+                      <Table pagination={false} columns={columns} dataSource={tableData}/>
                 )
             }
         </>
