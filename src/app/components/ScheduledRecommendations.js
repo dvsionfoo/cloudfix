@@ -10,7 +10,7 @@ export const ScheduledRecommendations = ({recommendations, onActionClick}) => {
         const [selectedRecommendations, setSelectedRecommendations] = useState([]);
 
         const rowSelection = {
-            onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
+            onChange: (selectedRowKeys, selectedRows: DataType[]) => {
                 setSelectedRecommendations(selectedRowKeys);
             }
         };
@@ -198,7 +198,7 @@ export const ScheduledRecommendations = ({recommendations, onActionClick}) => {
                                 ) : null
 
                             }
-                            <Table showHeader={selectedRecommendations.length <= 0} rowSelection={{...rowSelection}}
+                            <Table  rowSelection={{...rowSelection}}
                                    pagination={false} columns={columns}
                                    dataSource={tableData}/>
                         </div>

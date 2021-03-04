@@ -166,7 +166,7 @@ export const NewRecommendations = ({recommendations, onActionClick}) => {
                             selectedRecommendations.length > 0 ? (
                                 <div className="bulkActions" colSpan="6">
                                     <div style={{width: "500px"}}>
-                                        <Button variant="outline-secondary" onClick={handleBulkAction('now')}>
+                                        <Button style={{marginRight: 8}} variant="outline-secondary" onClick={handleBulkAction('now')}>
                                             <img
                                                 alt="action"
                                                 className="actionLink"
@@ -174,7 +174,7 @@ export const NewRecommendations = ({recommendations, onActionClick}) => {
                                             />
                                             <span>RUN NOW</span>
                                         </Button>
-                                        <Button variant="outline-secondary"
+                                        <Button style={{marginRight: 8}} variant="outline-secondary"
                                                 onClick={handleBulkAction('schedule')}>
                                             <img
                                                 alt="action"
@@ -196,7 +196,7 @@ export const NewRecommendations = ({recommendations, onActionClick}) => {
                                     <br/>
                                 </div>
                             ) : null}
-                        <Table showHeader={selectedRecommendations.length <= 0} rowSelection={{...rowSelection}}
+                        <Table rowSelection={{...rowSelection}}
                                pagination={false} columns={columns}
                                dataSource={tableData}/>
                     </div>
