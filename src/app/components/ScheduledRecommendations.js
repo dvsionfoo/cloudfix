@@ -170,7 +170,7 @@ export const ScheduledRecommendations = ({recommendations, onActionClick}) => {
                                                 <img
                                                     alt="action"
                                                     className="actionLink"
-                                                    src={toAbsoluteUrl("/media/run.png")}
+                                                    src={toAbsoluteUrl("/media/run.svg")}
                                                 />
                                                 <span>RUN NOW</span>
                                             </Button>
@@ -179,7 +179,7 @@ export const ScheduledRecommendations = ({recommendations, onActionClick}) => {
                                                 <img
                                                     alt="action"
                                                     className="actionLink"
-                                                    src={toAbsoluteUrl("/media/schedule.png")}
+                                                    src={toAbsoluteUrl("/media/schedule.svg")}
                                                 />
                                                 <span>SCHEDULE</span>
                                             </Button>
@@ -188,7 +188,7 @@ export const ScheduledRecommendations = ({recommendations, onActionClick}) => {
                                                 <img
                                                     alt="action"
                                                     className="actionLink"
-                                                    src={toAbsoluteUrl("/media/delete.png")}
+                                                    src={toAbsoluteUrl("/media/delete.svg")}
                                                 />
                                                 <span>IGNORE</span>
                                             </Button>
