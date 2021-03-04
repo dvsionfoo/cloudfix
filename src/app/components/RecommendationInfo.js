@@ -64,7 +64,7 @@ export function RecommendationInfo(props) {
             {
               recommendation && recommendation.parameters && (
                 <div className="parameters">
-                  <h5>Parmeters</h5>
+                  <h5>Parameters</h5>
                   <hr />
                   <table className="table table-head-custom">
                     <thead>

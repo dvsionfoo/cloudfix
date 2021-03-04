@@ -50,7 +50,7 @@ export function Dashboard(props) {
               </div>
               <div className="savingsAlert-column-2">
                 <h2>Recommended Savings</h2>
-                <p>We have recommendations for you that would save you ${FormatNumber(recommendedSavings)} in AWS costs. All you have to do is schedule tasks for CloudFix.</p>
+                <p>We have recommendations for you that would result in ${FormatNumber(recommendedSavings)} worth of annualized savings in AWS costs. All you have to do is schedule tasks for CloudFix.</p>
               </div>
             </div>
           </div>

@@ -35,6 +35,11 @@ function Accounts(props) {
     setModal(false);
   };
 
+  const hideModalGetAccounts = () => {
+    hideModal();
+    getUserAccounts();
+  }
+
   const showDeleteAccountModal = () => {
     setDeleteAccountModal(true);
   };
@@ -73,7 +78,7 @@ function Accounts(props) {
 
   return (
     <div className="accounts-page">
-      <AddUser show={modal} onHide={hideModal} />
+      <AddUser show={modal} onHide={hideModalGetAccounts} />
       <DeleteAccount show={deleteAccountModal} onHide={hideDeleteAccountModal} />
       <div className="row">
         <div className="col-md-12">
