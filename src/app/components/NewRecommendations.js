@@ -1,153 +1,206 @@
-import React, { useState, useEffect } from "react";
-import { Button} from "react-bootstrap";
+import React, {useEffect, useState} from "react";
 
-import { toAbsoluteUrl, FormatNumber } from "./../helpers";
-import { RecommendationActions } from './RecommendationActions';
+import {toAbsoluteUrl} from "./../helpers";
+import {RecommendationActions} from './RecommendationActions';
+import {Button, Input, Space, Table} from "antd";
+import {FilterOutlined} from "@ant-design/icons";
+import Highlighter from "react-highlight-words";
 
-export const NewRecommendations = ({ recommendations, onActionClick }) => {
- 
-    const [allChecked, setAllchecked] = useState(false);
+export const NewRecommendations = ({recommendations, onActionClick}) => {
+
     const [selectedRecommendations, setSelectedRecommendations] = useState([]);
 
-    const toggleAllCheckboxes = () => {
-        if (!allChecked) { 
-            const allRecommendations = recommendations.map(r => r.id);
-            setSelectedRecommendations(allRecommendations);
-            setAllchecked(true);
-        } else {
-            setSelectedRecommendations([]);
-            setAllchecked(false);
+    const rowSelection = {
+        onChange: (selectedRowKeys , selectedRows: DataType[]) => {
+            setSelectedRecommendations(selectedRowKeys);
         }
-    }
+    };
+    const [tableData, setTableData] = useState([]);
 
-    const isRecommendationSelected = (id) => {
-        return selectedRecommendations.includes(id);
-    }
-
-    const addRecommendation = (recommendationId) => {
-        let newRecommendations = [...selectedRecommendations, recommendationId];
-        setSelectedRecommendations(newRecommendations);        
-    }
-
-    const removeRecommendation = (recommendationId) => {
-        let newRecommendations = selectedRecommendations.filter(r => r !== recommendationId);          
-        setSelectedRecommendations(newRecommendations);
-    }
-
-    const addRemoveRecommendation = (recommendationId) => () => {
-        isRecommendationSelected(recommendationId) ? removeRecommendation(recommendationId) : addRecommendation(recommendationId);
-    }
+    useEffect(() => {
+        let tempData = [];
+        recommendations.forEach(itr => {
+            tempData.push({...itr, key: itr.id});
+        });
+        setTableData(tempData);
+    }, []);
 
     const handleOnAction = (recommendationId, actionType = 'now') => {
         onActionClick([recommendationId], actionType);
     };
 
     const handleBulkAction = (actionType) => () => {
-        onActionClick(selectedRecommendations, actionType);        
+        setSelectedRecommendations([]);
+        onActionClick(selectedRecommendations, actionType);
     }
 
-    useEffect(() => {
-       setAllchecked(false);
-       setSelectedRecommendations([]);
-      }, [recommendations]);
+    const [filterState, setFilterState] = useState({
+        searchText: '',
+        searchedColumn: '',
+    });
 
+    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setFilterState({
+            searchText: selectedKeys[0],
+            searchedColumn: dataIndex,
+        });
+    };
+
+    const handleReset = clearFilters => {
+        clearFilters();
+        setFilterState({...filterState, searchText: ''})
+    };
+
+    const getColumnSearchProps = dataIndex => ({
+        filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
+            <div style={{padding: 8}}>
+                <Input
+                    placeholder={`Search ${dataIndex}`}
+                    value={selectedKeys[0]}
+                    onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                    onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                    style={{width: 188, marginBottom: 8, display: 'block'}}
+                />
+                <Space>
+                    <Button
+                        type="primary"
+                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                        icon={<FilterOutlined/>}
+                        size="small"
+                        style={{width: 90}}
+                    >
+                        Search
+                    </Button>
+                    <Button onClick={() => handleReset(clearFilters)} size="small" style={{width: 90}}>
+                        Reset
+                    </Button>
+                    <Button
+                        type="link"
+                        size="small"
+                        onClick={() => {
+                            confirm({closeDropdown: false});
+                            setFilterState({
+                                searchText: selectedKeys[0],
+                                searchedColumn: dataIndex,
+                            });
+                        }}>
+                        Filter
+                    </Button>
+                </Space>
+            </div>
+        ),
+        filterIcon: filtered => <FilterOutlined style={{color: filtered ? '#1890ff' : undefined}}/>,
+        onFilter: (value, record) =>
+            record[dataIndex]
+                ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
+                : '',
+        render: text =>
+            filterState.searchedColumn === dataIndex ? (
+                <Highlighter
+                    highlightStyle={{backgroundColor: '#ffc069', padding: 0}}
+                    searchWords={[filterState.searchText]}
+                    autoEscape
+                    textToHighlight={text ? text.toString() : ''}
+                />
+            ) : (
+                text
+            )
+    });
+    const columns = [
+        {
+            title: 'RECOMMENDATION',
+            dataIndex: 'opportunityDescription',
+            key: 'opportunityDescription',
+            width: '25%',
+        },
+        {
+            title: 'RESOURCE ID',
+            dataIndex: 'resourceId',
+            key: 'resourceId',
+            ...getColumnSearchProps('resourceId'),
+            sorter: (a, b) => a.resourceId.localeCompare(b.resourceId)
+        },
+        {
+            title: 'ACCOUNT',
+            dataIndex: 'accountId',
+            key: 'accountId',
+            ...getColumnSearchProps('accountId'),
+            sorter: (a, b) => a.accountId.localeCompare(b.accountId)
+        },
+        {
+            title: 'REGION',
+            dataIndex: 'region',
+            key: 'region',
+            ...getColumnSearchProps('region'),
+            sorter: (a, b) => a.region.localeCompare(b.region)
+        },
+        {
+            title: 'SAVINGS',
+            dataIndex: 'annualSavings',
+            key: 'annualSavings',
+        },
+        {
+            title: 'ACTION',
+            dataIndex: 'action',
+            key: 'action',
+            width: "136",
+            render: (text, recommendation) => (
+                <RecommendationActions
+                    recommendationId={recommendation.id}
+                    onAction={handleOnAction}
+                    recommendationType="New"
+                    lastExecutionDate={recommendation.scheduledAt}
+                />
+            )
+        },
+    ];
     return (
         <>
-            
             {
                 (!recommendations || recommendations.length === 0) ? (
-                    <p>No new recommendations yet! We'll email you as soon as we find new saving opportunities.</p>                        
+                    <p>No new recommendations yet! We'll email you as soon as we find new saving opportunities.</p>
                 ) : (
-                        <div className="table-responsive">
-                            <table
-                                className="table table-head-custom table-vertical-center"
-                                id="kt_advance_table_widget_1"
-                            >
-                                <thead>
-                                    <tr className="text-left">
-                                        <th>
-                                            <label className="checkbox checkbox-sm checkbox-single">
-                                                <input type="checkbox" onClick={toggleAllCheckboxes} checked={allChecked} />
-                                                <span></span>
-                                            </label>
-                                        </th>
-                                        
-                                            {
-                                              selectedRecommendations.length > 0 ? (
-                                                <th className="bulkActions" colSpan="6">
-                                                    <div style={{ width: "500px" }}>
-                                                        <Button variant="outline-secondary" onClick={handleBulkAction('now')}>
-                                                            <img 
-                                                                alt="action" 
-                                                                className="actionLink" 
-                                                                src={toAbsoluteUrl("/media/run.png")} 
-                                                            /> 
-                                                            <span>RUN NOW</span>
-                                                        </Button>
-                                                        <Button variant="outline-secondary" onClick={handleBulkAction('schedule')}>
-                                                            <img 
-                                                                alt="action" 
-                                                                className="actionLink" 
-                                                                src={toAbsoluteUrl("/media/schedule.png")} 
-                                                            /> 
-                                                            <span>SCHEDULE</span>
-                                                        </Button>
-                                                        <Button variant="outline-secondary" onClick={handleBulkAction('cancel')}>
-                                                            <img 
-                                                                alt="action" 
-                                                                className="actionLink" 
-                                                                src={toAbsoluteUrl("/media/delete.png")}
-                                                            /> 
-                                                            <span>IGNORE</span>
-                                                        </Button>
-                                                    </div>
-                                                </th>
-                                              ) :  (
-                                                <React.Fragment>
-                                                    <th>RECOMMENDATION</th>
-                                                    <th>RESOURCE ID</th>
-                                                    <th>ACCOUNT</th>
-                                                    <th>REGION</th>
-                                                    <th>SAVINGS</th>
-                                                    <th>ACTIONS</th>
-                                                </React.Fragment>
-                                              ) 
-                                        }                                        
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {recommendations.map((recommendation, index) => (
-                                        <tr key={index}>
-                                            <td>
-                                                <label className="checkbox checkbox-sm checkbox-single">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={allChecked || isRecommendationSelected(recommendation.id)}
-                                                        onClick={addRemoveRecommendation(recommendation.id)} />
-                                                    <span></span>
-                                                </label>
-                                            </td>
-                                            <td>{recommendation.opportunityDescription}</td>
-                                            <td>{recommendation.resourceId}</td>
-                                            <td>{recommendation.accountId}</td>
-                                            <td>{recommendation.region}</td>
-                                            <td>${FormatNumber(recommendation.annualSavings)}</td>
-                                            <td> <div style={{ width: "120px" }}>                                             
-                                                <RecommendationActions
-                                                    recommendationId={recommendation.id}
-                                                    onAction={handleOnAction}
-                                                    recommendationType="New"
-                                                    lastExecutionDate={recommendation.scheduledAt}
-                                                />
-                                                </div>  
-                                            </td>
-                                        </tr>
-                                    ))}
-
-                                </tbody>
-                            </table>
-                        </div >
-                    )
+                    <div className="table-responsive">
+                        {
+                            selectedRecommendations.length > 0 ? (
+                                <div className="bulkActions" colSpan="6">
+                                    <div style={{width: "500px"}}>
+                                        <Button style={{marginRight: 8}} variant="outline-secondary" onClick={handleBulkAction('now')}>
+                                            <img
+                                                alt="action"
+                                                className="actionLink"
+                                                src={toAbsoluteUrl("/media/run.svg")}
+                                            />
+                                            <span>RUN NOW</span>
+                                        </Button>
+                                        <Button style={{marginRight: 8}} variant="outline-secondary"
+                                                onClick={handleBulkAction('schedule')}>
+                                            <img
+                                                alt="action"
+                                                className="actionLink"
+                                                src={toAbsoluteUrl("/media/schedule.svg")}
+                                            />
+                                            <span>SCHEDULE</span>
+                                        </Button>
+                                        <Button variant="outline-secondary"
+                                                onClick={handleBulkAction('cancel')}>
+                                            <img
+                                                alt="action"
+                                                className="actionLink"
+                                                src={toAbsoluteUrl("/media/delete.svg")}
+                                            />
+                                            <span>IGNORE</span>
+                                        </Button>
+                                    </div>
+                                    <br/>
+                                </div>
+                            ) : null}
+                        <Table rowSelection={{...rowSelection}}
+                               pagination={false} columns={columns}
+                               dataSource={tableData}/>
+                    </div>
+                )
             }
         </>
     );

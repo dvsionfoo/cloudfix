@@ -63,7 +63,7 @@ export const RecommendationActions = (props) => {
           <img 
               alt="action" 
               className={`actionLink ${nowDisabled() && 'disabled'}`}
-              src={toAbsoluteUrl("/media/run.png")} 
+              src={toAbsoluteUrl("/media/run.svg")}
               onClick={nowDisabled() ? disabledAction : handleClick(recommendationId)} />
       </OverlayTrigger>                                              
         
@@ -79,7 +79,7 @@ export const RecommendationActions = (props) => {
           <img 
               alt="action" 
               className={`actionLink ${scheduleDisabled() && 'disabled'}`}
-              src={toAbsoluteUrl("/media/schedule.png")} 
+              src={toAbsoluteUrl("/media/schedule.svg")}
               onClick={scheduleDisabled() ? disabledAction : handleClick(recommendationId, 'schedule')} />
         </OverlayTrigger>
         <OverlayTrigger
@@ -94,7 +94,7 @@ export const RecommendationActions = (props) => {
                 <img 
                     alt="action" 
                     className={`actionLink ${cancelDisabled() && 'disabled'}`}
-                    src={toAbsoluteUrl("/media/delete.png")}
+                    src={toAbsoluteUrl("/media/delete.svg")}
                     onClick={cancelDisabled() ? disabledAction : handleClick(recommendationId, recommendationType === 'Scheduled' ? 'cancel' : 'reject')} />
         </OverlayTrigger>
         <OverlayTrigger
@@ -109,7 +109,7 @@ export const RecommendationActions = (props) => {
             <img 
                 alt="action" 
                 className="actionLink" 
-                src={toAbsoluteUrl("/media/info.png")}
+                src={toAbsoluteUrl("/media/info.svg")}
                 onClick={handleClick(recommendationId, 'info')} />
         </OverlayTrigger>
     </>

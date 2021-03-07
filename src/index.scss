@@ -6,8 +6,7 @@
 @import "./theme/_assets/sass/style.react.scss";
 
 body {
-  background: #F4F4F4 url("/media/bg/dashboard-bg.png") no-repeat;
-  background-position: 0% 60px;
+  background: #F4F4F4 url("/media/bg/dashboard-bg.png") no-repeat 0% 60px;
   background-size: contain;
 }
 
@@ -39,8 +38,7 @@ body {
   }
   width: 100%;
   height: 110vh;
-  background: #037ADE url("/media/bg/site-bg.png");
-  background-repeat: no-repeat;
+  background: #037ADE url("/media/bg/site-bg.png") no-repeat;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -480,7 +478,7 @@ table th.bulkActions {
 }
 
 #kt_content .container {
-  box-shadow: 0px 0px 35px rgba(181, 181, 195, 0.15);
+  box-shadow: 0 0 35px rgba(181, 181, 195, 0.15);
   border-radius: 6px;
   background: #fff;
 }
@@ -492,8 +490,8 @@ table th.bulkActions {
 
 p.addAccountsClose {
   text-align: center;
-  margin: 0;
-  margin-bottom: 20px;
+  margin: 0 0 20px;
+
   button {
     min-width: 100px;
   }
@@ -536,15 +534,13 @@ p.addAccountsClose {
 }
 
 .savingsAlert-column-1 {
-  padding: 10px;
-  padding-right: 20px;
+  padding: 10px 20px 10px 10px;
   min-width: 100px;
   text-align: center;
 }
 
 .savingsAlert-column-2 {
-  padding: 10px;
-  padding-left: 20px;
+  padding: 10px 10px 10px 20px;
   min-width: 100px;
 }
 
