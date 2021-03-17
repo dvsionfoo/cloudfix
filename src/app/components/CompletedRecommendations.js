@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, Input, Space, Tag, Table} from 'antd';
 import 'antd/dist/antd.css';
-import {FilterOutlined} from '@ant-design/icons';
+import {FilterFilled} from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 
 import {RecommendationActions} from './RecommendationActions';
@@ -48,23 +48,14 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
                     value={selectedKeys[0]}
                     onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
                     onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-                    style={{width: 188, marginBottom: 8, display: 'block'}}
+                    style={{height: 24, marginBottom: 8}} allowClear={true}
                 />
-                <Space>
-                    <Button
-                        type="primary"
-                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-                        icon={<FilterOutlined/>}
-                        size="small"
-                        style={{width: 90}}
-                    >
-                        Search
-                    </Button>
+                <Space style={{display: "flex", justifyContent: "space-between"}}>
                     <Button onClick={() => handleReset(clearFilters)} size="small" style={{width: 90}}>
                         Reset
                     </Button>
                     <Button
-                        type="link"
+                        type="primary"
                         size="small"
                         onClick={() => {
                             confirm({closeDropdown: false});
@@ -73,12 +64,12 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
                                 searchedColumn: dataIndex,
                             });
                         }}>
-                        Filter
+                        Ok
                     </Button>
                 </Space>
             </div>
         ),
-        filterIcon: filtered => <FilterOutlined style={{color: filtered ? '#1890ff' : undefined}}/>,
+        filterIcon: filtered => <FilterFilled style={{color: filtered ? '#1890ff' : undefined}}/>,
         onFilter: (value, record) =>
             record[dataIndex]
                 ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
@@ -120,13 +111,29 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
             title: 'REGION',
             dataIndex: 'region',
             key: 'region',
-            ...getColumnSearchProps('region'),
+            filters: [
+                {
+                    text: 'us-east-1',
+                    value: 'us-east-1',
+                },
+                {
+                    text: 'us-east-2',
+                    value: 'us-east-2',
+                },
+            ],
+            onFilter: (value, record) => record.region.indexOf(value) === 0,
             sorter: (a, b) => a.region.localeCompare(b.region)
         },
         {
             title: 'SAVINGS',
             dataIndex: 'annualSavings',
             key: 'annualSavings',
+            className: 'column-money',
+            align: 'right',
+            sorter: (a, b) => a.annualSavings - b.annualSavings,
+            render: (text, recommendation) => (
+                <div>{Number((recommendation.annualSavings).toFixed(0))} $</div>
+            ),
         },
         {
             title: 'STATUS',
@@ -159,7 +166,7 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
                 (!recommendations || recommendations.length === 0) ? (
                     <p>No fixes! Go to new recommendations tab to get started.</p>
                 ) : (
-                      <Table pagination={false} columns={columns} dataSource={tableData}/>
+                      <Table pagination={false} bordered columns={columns} dataSource={tableData} scroll={{x: 1080}}/>
                 )
             }
         </>
