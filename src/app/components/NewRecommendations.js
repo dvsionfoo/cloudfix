@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {toAbsoluteUrl} from "./../helpers";
 import {RecommendationActions} from './RecommendationActions';
 import {Button, Input, Space, Table} from "antd";
-import {FilterOutlined} from "@ant-design/icons";
+import {FilterFilled} from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 
 export const NewRecommendations = ({recommendations, onActionClick}) => {
@@ -60,23 +60,14 @@ export const NewRecommendations = ({recommendations, onActionClick}) => {
                     value={selectedKeys[0]}
                     onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
                     onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-                    style={{width: 188, marginBottom: 8, display: 'block'}}
+                    style={{height: 24, marginBottom: 8}} allowClear={true}
                 />
-                <Space>
-                    <Button
-                        type="primary"
-                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-                        icon={<FilterOutlined/>}
-                        size="small"
-                        style={{width: 90}}
-                    >
-                        Search
-                    </Button>
+                <Space style={{display: "flex", justifyContent: "space-between"}}>
                     <Button onClick={() => handleReset(clearFilters)} size="small" style={{width: 90}}>
                         Reset
                     </Button>
                     <Button
-                        type="link"
+                        type="primary"
                         size="small"
                         onClick={() => {
                             confirm({closeDropdown: false});
@@ -85,12 +76,12 @@ export const NewRecommendations = ({recommendations, onActionClick}) => {
                                 searchedColumn: dataIndex,
                             });
                         }}>
-                        Filter
+                        Ok
                     </Button>
                 </Space>
             </div>
         ),
-        filterIcon: filtered => <FilterOutlined style={{color: filtered ? '#1890ff' : undefined}}/>,
+        filterIcon: filtered => <FilterFilled style={{color: filtered ? '#1890ff' : undefined}}/>,
         onFilter: (value, record) =>
             record[dataIndex]
                 ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
@@ -132,13 +123,29 @@ export const NewRecommendations = ({recommendations, onActionClick}) => {
             title: 'REGION',
             dataIndex: 'region',
             key: 'region',
-            ...getColumnSearchProps('region'),
+            filters: [
+                {
+                    text: 'us-east-1',
+                    value: 'us-east-1',
+                },
+                {
+                    text: 'us-east-2',
+                    value: 'us-east-2',
+                },
+            ],
+            onFilter: (value, record) => record.region.indexOf(value) === 0,
             sorter: (a, b) => a.region.localeCompare(b.region)
         },
         {
             title: 'SAVINGS',
             dataIndex: 'annualSavings',
             key: 'annualSavings',
+            className: 'column-money',
+            align: 'right',
+            sorter: (a, b) => a.annualSavings - b.annualSavings,
+            render: (text, recommendation) => (
+                <div>{Number((recommendation.annualSavings).toFixed(0))} $</div>
+            ),
         },
         {
             title: 'ACTION',
@@ -196,7 +203,7 @@ export const NewRecommendations = ({recommendations, onActionClick}) => {
                                     <br/>
                                 </div>
                             ) : null}
-                        <Table rowSelection={{...rowSelection}}
+                        <Table bordered rowSelection={{...rowSelection}}
                                pagination={false} columns={columns}
                                dataSource={tableData}/>
                     </div>

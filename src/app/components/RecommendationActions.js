@@ -1,117 +1,95 @@
 import React from "react";
-import { OverlayTrigger, Tooltip} from "react-bootstrap";
-import { formatDistanceStrict } from 'date-fns'
-
-import { toAbsoluteUrl } from "./../helpers";
+import {formatDistanceStrict} from 'date-fns'
+import {Space, Tooltip} from 'antd';
+import {toAbsoluteUrl} from "./../helpers";
 
 export const RecommendationActions = (props) => {
-  const {recommendationId, onAction, recommendationType, lastExecutionDate} = props;
+    const {recommendationId, onAction, recommendationType, lastExecutionDate} = props;
 
-  const handleClick = (recommendationId, action = 'now') => () => {
-    onAction(recommendationId, action);
-  }
+    const handleClick = (recommendationId, action = 'now') => () => {
+        onAction(recommendationId, action);
+    }
 
-  const getTimeDiff = (executionDate) => {
-    if(!executionDate) return 100;
-    const timeDiff = formatDistanceStrict(
-      new Date(),
-      new Date(executionDate),
-      { unit: 'minute' }
-    );
-    const time = Number(timeDiff.split(' ')[0]);
-    return time;
-  }
-  const cancelDisabled = () => {
-    const t = getTimeDiff(lastExecutionDate);
-    if(lastExecutionDate && t < 20) return true;
-    if(recommendationType === 'Completed') return true;
-    return false;
-  }
+    const getTimeDiff = (executionDate) => {
+        if (!executionDate) return 100;
+        const timeDiff = formatDistanceStrict(
+            new Date(),
+            new Date(executionDate),
+            {unit: 'minute'}
+        );
+        const time = Number(timeDiff.split(' ')[0]);
+        return time;
+    }
+    const cancelDisabled = () => {
+        const t = getTimeDiff(lastExecutionDate);
+        if (lastExecutionDate && t < 20) return true;
+        if (recommendationType === 'Completed') return true;
+        return false;
+    }
 
-  const nowDisabled = () => {
-    const t = getTimeDiff(lastExecutionDate);
-    if(lastExecutionDate && t < 20) return true;
-    if(recommendationType === 'Completed') return true;
-    if(recommendationType === 'now') return false;
-    return false;
-  }
+    const nowDisabled = () => {
+        const t = getTimeDiff(lastExecutionDate);
+        if (lastExecutionDate && t < 20) return true;
+        if (recommendationType === 'Completed') return true;
+        if (recommendationType === 'now') return false;
+        return false;
+    }
 
-  const scheduleDisabled = () => {
-    const t = getTimeDiff(lastExecutionDate);
-    if(lastExecutionDate && t < 20) return true;
-    if(recommendationType === 'Completed') return true;
-    return false;
-  }
+    const scheduleDisabled = () => {
+        const t = getTimeDiff(lastExecutionDate);
+        if (lastExecutionDate && t < 20) return true;
+        if (recommendationType === 'Completed') return true;
+        return false;
+    }
 
-  const disabledAction = () => {
-    console.log('Disabled Action clicked');
-    return false;
-  }
+    const disabledAction = () => {
+        console.log('Disabled Action clicked');
+        return false;
+    }
 
+    const entering = (e) => {
+        e.children[0].style.borderTopColor = 'rgba(0, 0, 0, 0.85)';
+        e.children[1].style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
+    };
 
-  return (
+    return (
         <>
-        <OverlayTrigger
-          key="now"
-          placement="bottom"
-          overlay={
-              <Tooltip>
-            Run Now
-              </Tooltip>
-          }
-          >
-          <img 
-              alt="action" 
-              className={`actionLink ${nowDisabled() && 'disabled'}`}
-              src={toAbsoluteUrl("/media/run.svg")}
-              onClick={nowDisabled() ? disabledAction : handleClick(recommendationId)} />
-      </OverlayTrigger>                                              
-        
-      <OverlayTrigger
-          key="schedule"
-          placement="bottom"
-          overlay={
-              <Tooltip>
-        Schedule
-              </Tooltip>
-          }
-      >
-          <img 
-              alt="action" 
-              className={`actionLink ${scheduleDisabled() && 'disabled'}`}
-              src={toAbsoluteUrl("/media/schedule.svg")}
-              onClick={scheduleDisabled() ? disabledAction : handleClick(recommendationId, 'schedule')} />
-        </OverlayTrigger>
-        <OverlayTrigger
-            key="Cancel"
-            placement="bottom"
-            overlay={
-                <Tooltip>
-          Cancel
+            <Space size={"small"}>
+                <Tooltip title="Run Now" placement="bottom">
+                    <img
+                        alt="action"
+                        className={`actionLink ${nowDisabled() && 'disabled'}`}
+                        src={toAbsoluteUrl("/media/run.svg")}
+                        onClick={nowDisabled() ? disabledAction : handleClick(recommendationId)}/>
                 </Tooltip>
-            }
-            >
-                <img 
-                    alt="action" 
-                    className={`actionLink ${cancelDisabled() && 'disabled'}`}
-                    src={toAbsoluteUrl("/media/delete.svg")}
-                    onClick={cancelDisabled() ? disabledAction : handleClick(recommendationId, recommendationType === 'Scheduled' ? 'cancel' : 'reject')} />
-        </OverlayTrigger>
-        <OverlayTrigger
-          key="info"
-          placement="bottom"
-          overlay={
-              <Tooltip>
-        Info
-              </Tooltip>
-          }
-          >
-            <img 
-                alt="action" 
-                className="actionLink" 
-                src={toAbsoluteUrl("/media/info.svg")}
-                onClick={handleClick(recommendationId, 'info')} />
-        </OverlayTrigger>
-    </>
-  );
+            </Space>
+            <Space size={"small"}>
+                <Tooltip title="Schedule" placement="bottom">
+                    <img
+                        alt="action"
+                        className={`actionLink ${scheduleDisabled() && 'disabled'}`}
+                        src={toAbsoluteUrl("/media/schedule.svg")}
+                        onClick={scheduleDisabled() ? disabledAction : handleClick(recommendationId, 'schedule')}/>
+                </Tooltip>
+            </Space>
+            <Space size={"small"}>
+                <Tooltip title="Cancel" placement="bottom">
+                    <img
+                        alt="action"
+                        className={`actionLink ${cancelDisabled() && 'disabled'}`}
+                        src={toAbsoluteUrl("/media/delete.svg")}
+                        onClick={cancelDisabled() ? disabledAction : handleClick(recommendationId, recommendationType === 'Scheduled' ? 'cancel' : 'reject')}/>
+                </Tooltip>
+            </Space>
+            <Space size={"small"}>
+                <Tooltip title="Info" placement="bottom">
+                    <img
+                        alt="action"
+                        className="actionLink"
+                        src={toAbsoluteUrl("/media/info.svg")}
+                        onClick={handleClick(recommendationId, 'info')}/>
+                </Tooltip>
+            </Space>
+        </>
+    );
 }
