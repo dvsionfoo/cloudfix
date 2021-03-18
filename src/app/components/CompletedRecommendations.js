@@ -40,11 +40,11 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
         setTableData(tempData);
     }, []);
 
-    const getColumnSearchProps = dataIndex => ({
+    const getColumnSearchProps = (dataIndex, placeholder) => ({
         filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
             <div style={{padding: 8}}>
                 <Input
-                    placeholder={`Search ${dataIndex}`}
+                    placeholder={`Search ${placeholder}`}
                     value={selectedKeys[0]}
                     onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
                     onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
@@ -97,14 +97,14 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
             title: 'RESOURCE ID',
             dataIndex: 'resourceId',
             key: 'resourceId',
-            ...getColumnSearchProps('resourceId'),
+            ...getColumnSearchProps('resourceId', 'Resource id'),
             sorter: (a, b) =>  a.resourceId.localeCompare(b.resourceId)
         },
         {
             title: 'ACCOUNT',
             dataIndex: 'accountId',
             key: 'accountId',
-            ...getColumnSearchProps('accountId'),
+            ...getColumnSearchProps('accountId', 'Account Id'),
             sorter: (a, b) => a.accountId.localeCompare(b.accountId)
         },
         {
@@ -125,14 +125,12 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
             sorter: (a, b) => a.region.localeCompare(b.region)
         },
         {
-            title: 'SAVINGS',
+            title: 'SAVINGS $',
             dataIndex: 'annualSavings',
             key: 'annualSavings',
-            className: 'column-money',
-            align: 'right',
             sorter: (a, b) => a.annualSavings - b.annualSavings,
             render: (text, recommendation) => (
-                <div>{Number((recommendation.annualSavings).toFixed(0))} $</div>
+                <div style={{float: 'right'}}>{Number((recommendation.annualSavings).toFixed(0))}</div>
             ),
         },
         {
