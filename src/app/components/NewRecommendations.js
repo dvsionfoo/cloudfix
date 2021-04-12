@@ -5,13 +5,14 @@ import {RecommendationActions} from './RecommendationActions';
 import {Button, Input, Space, Table} from "antd";
 import {FilterFilled} from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
+import {FormatNumber} from "./../helpers";
 
 export const NewRecommendations = ({recommendations, onActionClick}) => {
 
     const [selectedRecommendations, setSelectedRecommendations] = useState([]);
 
     const rowSelection = {
-        onChange: (selectedRowKeys , selectedRows: DataType[]) => {
+        onChange: (selectedRowKeys , selectedRows) => {
             setSelectedRecommendations(selectedRowKeys);
         }
     };
@@ -23,6 +24,7 @@ export const NewRecommendations = ({recommendations, onActionClick}) => {
             tempData.push({...itr, key: itr.id});
         });
         setTableData(tempData);
+        // eslint-disable-next-line
     }, []);
 
     const handleOnAction = (recommendationId, actionType = 'now') => {
@@ -137,12 +139,12 @@ export const NewRecommendations = ({recommendations, onActionClick}) => {
             sorter: (a, b) => a.region.localeCompare(b.region)
         },
         {
-            title: 'SAVINGS $',
+            title: 'SAVINGS',
             dataIndex: 'annualSavings',
             key: 'annualSavings',
             sorter: (a, b) => a.annualSavings - b.annualSavings,
             render: (text, recommendation) => (
-                <div style={{float: 'right'}}>{Number((recommendation.annualSavings).toFixed(0))}</div>
+                <div style={{float: 'right'}}>${FormatNumber(recommendation.annualSavings)}</div>
             ),
         },
         {

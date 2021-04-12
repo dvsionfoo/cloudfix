@@ -568,3 +568,10 @@ p.addAccountsClose {
 .ant-table-column-sorter-full {
   margin-bottom: 4px;
 }
+
+.ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td {
+  padding: 5px 6px;
+}
+.ant-table-column-sorters {
+  padding: 10px;
+}

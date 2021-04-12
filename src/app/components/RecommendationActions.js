@@ -47,11 +47,6 @@ export const RecommendationActions = (props) => {
         return false;
     }
 
-    const entering = (e) => {
-        e.children[0].style.borderTopColor = 'rgba(0, 0, 0, 0.85)';
-        e.children[1].style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
-    };
-
     return (
         <>
             <Space size={"small"}>

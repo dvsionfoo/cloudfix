@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
 
 import {RecommendationActions} from './RecommendationActions';
-import {Button, Input, Space, Table, Tag} from "antd";
+import {Button, Input, Space, Table} from "antd";
 import {FilterFilled} from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
+import {FormatNumber} from "./../helpers";
 
 export const InprogressRecommendations = ({recommendations, onActionClick}) => {
 
@@ -33,6 +34,7 @@ export const InprogressRecommendations = ({recommendations, onActionClick}) => {
             tempData.push({...itr, key: itr.id});
         });
         setTableData(tempData);
+        // eslint-disable-next-line
     }, []);
 
     const handleOnAction = (recommendationId, actionType = 'now') => {
@@ -125,23 +127,23 @@ export const InprogressRecommendations = ({recommendations, onActionClick}) => {
             sorter: (a, b) => a.region.localeCompare(b.region)
         },
         {
-            title: 'SAVINGS $',
+            title: 'SAVINGS',
             dataIndex: 'annualSavings',
             key: 'annualSavings',
             sorter: (a, b) => a.annualSavings - b.annualSavings,
             render: (text, recommendation) => (
-                <div style={{float: 'right'}}>{Number((recommendation.annualSavings).toFixed(0))}</div>
+                <div style={{float: 'right'}}>${FormatNumber(recommendation.annualSavings)}</div>
             ),
         },
         {
-            title: 'STATUS',
-            dataIndex: 'status',
-            key: 'status',
-            render: status => (
-                <>
-                    <Tag color={'#6993FF'} key={status}>{status.toUpperCase()}</Tag>
-                </>
-            )
+            title: 'EXEC TIME (Local)',
+            dataIndex: 'lastUpdatedDate',
+            key: 'lastUpdatedDate',
+            width: "60",
+            sorter: (a, b) => a.lastUpdatedDate - b.lastUpdatedDate,
+            render: (text, recommendation) => (
+                <div>{recommendation.lastUpdatedDate && new Date(recommendation.lastUpdatedDate).toLocaleString()}</div>
+            ),
         },
         {
             title: 'ACTION',

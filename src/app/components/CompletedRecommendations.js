@@ -3,6 +3,7 @@ import {Button, Input, Space, Tag, Table} from 'antd';
 import 'antd/dist/antd.css';
 import {FilterFilled} from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
+import {FormatNumber} from "./../helpers";
 
 import {RecommendationActions} from './RecommendationActions';
 
@@ -38,6 +39,7 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
             tempData.push({...itr, key: itr.id});
         });
         setTableData(tempData);
+        // eslint-disable-next-line
     }, []);
 
     const getColumnSearchProps = (dataIndex, placeholder) => ({
@@ -125,12 +127,12 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
             sorter: (a, b) => a.region.localeCompare(b.region)
         },
         {
-            title: 'SAVINGS $',
+            title: 'SAVINGS',
             dataIndex: 'annualSavings',
             key: 'annualSavings',
             sorter: (a, b) => a.annualSavings - b.annualSavings,
             render: (text, recommendation) => (
-                <div style={{float: 'right'}}>{Number((recommendation.annualSavings).toFixed(0))}</div>
+                <div style={{float: 'right'}}>${FormatNumber(recommendation.annualSavings)}</div>
             ),
         },
         {
