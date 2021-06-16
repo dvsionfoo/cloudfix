@@ -5,3 +5,4 @@ export * from "./TablePaginationHelpers";
 export * from "./TableRowSelectionHelpers";
 export * from "./TableSortingHelpers";
 export * from "./NumberFormattingHelpers";
+export * from "./ArrayObjectsUnique";

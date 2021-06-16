@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
-import {Button, Input, Space, Tag, Table} from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Button, Input, Space, Table} from 'antd';
 import 'antd/dist/antd.css';
 import {FilterFilled} from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
-import {FormatNumber} from "./../helpers";
 
+import {FormatNumber, uniqueBy} from './../helpers';
 import {RecommendationActions} from './RecommendationActions';
 
 export const CompletedRecommendations = ({recommendations, onActionClick}) => {
@@ -20,6 +20,9 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
         searchedColumn: '',
     });
 
+    const [regions, setRegions] = useState([]);
+    const [completionStatus, setCompletionStatus] = useState([]);
+
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setFilterState({
@@ -30,17 +33,24 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
 
     const handleReset = clearFilters => {
         clearFilters();
-        setFilterState({...filterState, searchText: ''})
+        setFilterState({...filterState, searchText: ''});
     };
 
     useEffect(() => {
-        let tempData = [];
+        const tempData = [];
         recommendations.forEach(itr => {
             tempData.push({...itr, key: itr.id});
         });
         setTableData(tempData);
-        // eslint-disable-next-line
-    }, []);
+        const uniqueReqions = uniqueBy(recommendations, 'region').map(r => {
+            return {text: r, value: r};
+        });
+        const completionStatuses = uniqueBy(recommendations, 'status').map(r => {
+            return {text: r, value: r};
+        });
+        setRegions(uniqueReqions);
+        setCompletionStatus(completionStatuses);
+    }, [recommendations]);
 
     const getColumnSearchProps = (dataIndex, placeholder) => ({
         filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
@@ -66,7 +76,7 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
                                 searchedColumn: dataIndex,
                             });
                         }}>
-                        Ok
+                        OK
                     </Button>
                 </Space>
             </div>
@@ -113,16 +123,7 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
             title: 'REGION',
             dataIndex: 'region',
             key: 'region',
-            filters: [
-                {
-                    text: 'us-east-1',
-                    value: 'us-east-1',
-                },
-                {
-                    text: 'us-east-2',
-                    value: 'us-east-2',
-                },
-            ],
+            filters: regions,
             onFilter: (value, record) => record.region.indexOf(value) === 0,
             sorter: (a, b) => a.region.localeCompare(b.region)
         },
@@ -130,26 +131,24 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
             title: 'SAVINGS',
             dataIndex: 'annualSavings',
             key: 'annualSavings',
+            align: 'right',
             sorter: (a, b) => a.annualSavings - b.annualSavings,
             render: (text, recommendation) => (
-                <div style={{float: 'right'}}>${FormatNumber(recommendation.annualSavings)}</div>
+                <div style={{float: 'right', paddingRight: '20px'}}>${FormatNumber(recommendation.annualSavings)}</div>
             ),
         },
         {
             title: 'STATUS',
             dataIndex: 'status',
             key: 'status',
-            render: status => (
-                <>
-                    <Tag color={'#6993FF'} key={status}>{status.toUpperCase()}</Tag>
-                </>
-            )
+            filters: completionStatus,
+            onFilter: (value, record) => record.status.indexOf(value) === 0,
         },
         {
             title: 'ACTION',
             dataIndex: 'action',
             key: 'action',
-            width: "136",
+            width: '136',
             render: (text, recommendation) => (
                 <RecommendationActions
                     recommendationId={recommendation.id}
@@ -166,7 +165,12 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
                 (!recommendations || recommendations.length === 0) ? (
                     <p>No fixes! Go to new recommendations tab to get started.</p>
                 ) : (
-                      <Table pagination={false} bordered columns={columns} dataSource={tableData} scroll={{x: 1080}}/>
+                    <Table 
+                        pagination={{pageSize: 10}} 
+                        bordered 
+                        columns={columns} 
+                        dataSource={tableData} 
+                        scroll={{x: 1080}} />
                 )
             }
         </>
