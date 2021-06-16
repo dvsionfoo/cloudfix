@@ -568,3 +568,53 @@ p.addAccountsClose {
 .ant-table-column-sorter-full {
   margin-bottom: 4px;
 }
+
+.ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td {
+  padding: 5px 6px;
+}
+.ant-table-column-sorters {
+  padding: 10px;
+}
+
+.ant-table.ant-table-bordered > .ant-table-container {
+  border: none;
+}
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-content > table > tbody > tr > td {
+  border-left: none;
+  border-right: none;
+  font-size: 13px;
+  font-weight: normal;
+  padding: 15px 5px;
+  color: #464E5F;
+}
+
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-content > table > thead > tr > th {
+  font-weight: 500;
+  font-size: 14px;
+  color: #B5B5C3 !important;
+  background: transparent;
+  border-right: none;
+}
+
+.refresh-recommendations-btn {
+  margin-left: auto;
+  order: 2;
+  span {
+    margin-right: 10px;
+    width: 15px;
+    height: 15px;
+    font-size: 15px;
+    position: relative;
+    top: 5px;
+    &.spinner {
+      top: 0;
+    }
+  }
+}
+
+.ant-table-wrapper, .ant-spin-container, .ant-table, .ant-table.ant-table-bordered, .ant-table.ant-table-bordered > .ant-table-container, .ant-table-container, .ant-table-content {
+  overflow: hidden;
+  table {
+    overflow: hidden;
+  }
+}

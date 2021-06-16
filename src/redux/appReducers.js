@@ -59,7 +59,7 @@ export const reducer = (state = enrichedAuthState, action) => {
         const newRecommendations = recommendations.filter(r => r.status.toLowerCase() === 'suggested');
         const scheduledRecommendations = recommendations.filter(r => r.status.toLowerCase() === 'scheduled');
         const completedRecommendations = recommendations.filter(r => { 
-            return r.status.toLowerCase() !== 'suggested' && r.status.toLowerCase() !== 'scheduled';
+            return r.status.toLowerCase() !== 'suggested' && r.status.toLowerCase() !== 'scheduled' && r.status.toLowerCase() !== 'in progress';
         });
         const inprogressRecommendations = recommendations.filter(r => r.status.toLowerCase() === 'in progress');
         return { ...state, recommendations: {

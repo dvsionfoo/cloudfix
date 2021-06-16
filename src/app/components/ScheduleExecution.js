@@ -80,7 +80,7 @@ export function ScheduleExecution(props) {
               isValidDate(scheduleDate) && (
                 <>
                   <p>Local: {new Date(scheduleDate).toLocaleString()}</p>
-                  <p>GMT: {new Date(scheduleDate).toUTCString()}</p>
+                  <p>UTC: {new Date(scheduleDate).toUTCString()}</p>
                 </>
               )
             }

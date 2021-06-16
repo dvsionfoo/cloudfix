@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { Nav, Tab } from "react-bootstrap";
 import axios from "axios";
 import { connect } from "react-redux";
+import { Button } from "react-bootstrap";
+import Icon from '@material-ui/core/Icon';
 
 import {NewRecommendations} from './NewRecommendations';
 import {ScheduledRecommendations} from './ScheduledRecommendations';
@@ -168,7 +170,7 @@ const getScheduledDate = (date = undefined) => {
                   className={`nav-link py-2 px-4 ${key === "Inprogress" ? "active" : ""
                     }`}
                 >
-                  In progress
+                  In Progress
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item className="nav-item" as="li">
@@ -182,6 +184,12 @@ const getScheduledDate = (date = undefined) => {
               </Nav.Item>
             </Nav>
           </Tab.Container>
+          <Button
+            className="btn btn-outline-primary font-weight-bolder font-size-sm refresh-recommendations-btn"
+            onClick={refetchRecommendations}
+          ><Icon className="fa fa-sync" />
+            Refresh Recommendations {loading && <span className="ml-3 spinner spinner-white"></span>}
+          </Button>
         </div>
       </div>
       {/* end::Header */}

@@ -5,16 +5,18 @@ import {RecommendationActions} from './RecommendationActions';
 import {Button, Input, Space, Table} from "antd";
 import {FilterFilled} from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
+import {FormatNumber, uniqueBy} from "./../helpers";
 
 export const ScheduledRecommendations = ({recommendations, onActionClick}) => {
         const [selectedRecommendations, setSelectedRecommendations] = useState([]);
 
         const rowSelection = {
-            onChange: (selectedRowKeys, selectedRows: DataType[]) => {
+            onChange: (selectedRowKeys, selectedRows) => {
                 setSelectedRecommendations(selectedRowKeys);
             }
         };
         const [tableData, setTableData] = useState([]);
+        const [regions, setRegions] = useState([]);
 
         useEffect(() => {
             let tempData = [];
@@ -22,7 +24,11 @@ export const ScheduledRecommendations = ({recommendations, onActionClick}) => {
                 tempData.push({...itr, key: itr.id});
             });
             setTableData(tempData);
-        }, []);
+            const uniqueReqions = uniqueBy(recommendations, 'region').map(r => {
+                return {text: r, value: r};
+            });
+            setRegions(uniqueReqions);
+        }, [recommendations]);
 
         const handleBulkAction = (actionType) => () => {
             setSelectedRecommendations([]);
@@ -75,7 +81,7 @@ export const ScheduledRecommendations = ({recommendations, onActionClick}) => {
                                     searchedColumn: dataIndex,
                                 });
                             }}>
-                            Ok
+                            OK
                         </Button>
                     </Space>
                 </div>
@@ -122,33 +128,35 @@ export const ScheduledRecommendations = ({recommendations, onActionClick}) => {
                 title: 'REGION',
                 dataIndex: 'region',
                 key: 'region',
-                filters: [
-                    {
-                        text: 'us-east-1',
-                        value: 'us-east-1',
-                    },
-                    {
-                        text: 'us-east-2',
-                        value: 'us-east-2',
-                    },
-                ],
+                filters: regions,
                 onFilter: (value, record) => record.region.indexOf(value) === 0,
                 sorter: (a, b) => a.region.localeCompare(b.region)
             },
             {
-                title: 'SAVINGS $',
+                title: 'SAVINGS',
                 dataIndex: 'annualSavings',
                 key: 'annualSavings',
+                align: 'right',
                 sorter: (a, b) => a.annualSavings - b.annualSavings,
                 render: (text, recommendation) => (
-                    <div style={{float: 'right'}}>{Number((recommendation.annualSavings).toFixed(0))}</div>
+                    <div style={{float: 'right', paddingRight: '20px'}}>${FormatNumber(recommendation.annualSavings)}</div>
+                ),
+            },
+            {
+                title: 'EXEC TIME (Local)',
+                dataIndex: 'scheduledAt',
+                key: 'scheduledAt',
+                width: "60",
+                sorter: (a, b) => a.scheduledAt - b.scheduledAt,
+                render: (text, recommendation) => (
+                    <div>{new Date(recommendation.scheduledAt).toLocaleString()}</div>
                 ),
             },
             {
                 title: 'ACTION',
                 dataIndex: 'action',
                 key: 'action',
-                width: "150",
+                width: "160",
                 render: (text, recommendation) => (
                     <RecommendationActions
                         recommendationId={recommendation.id}
@@ -203,9 +211,12 @@ export const ScheduledRecommendations = ({recommendations, onActionClick}) => {
                                 ) : null
 
                             }
-                            <Table bordered rowSelection={{...rowSelection}}
-                                   pagination={false} columns={columns}
-                                   dataSource={tableData}/>
+                            <Table 
+                                bordered 
+                                rowSelection={{...rowSelection}}
+                                pagination={{pageSize: 10}}
+                                columns={columns}
+                                dataSource={tableData} />
                         </div>
                     )
                 }

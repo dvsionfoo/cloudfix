@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState} from 'react';
+import {Button, Input, Space, Table} from 'antd';
+import {FilterFilled} from '@ant-design/icons';
+import Highlighter from 'react-highlight-words';
 
 import {RecommendationActions} from './RecommendationActions';
-import {Button, Input, Space, Table, Tag} from "antd";
-import {FilterFilled} from "@ant-design/icons";
-import Highlighter from "react-highlight-words";
+import {FormatNumber, uniqueBy} from './../helpers';
 
 export const InprogressRecommendations = ({recommendations, onActionClick}) => {
 
@@ -13,6 +14,8 @@ export const InprogressRecommendations = ({recommendations, onActionClick}) => {
         searchText: '',
         searchedColumn: '',
     });
+
+    const [regions, setRegions] = useState([]);
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -24,16 +27,20 @@ export const InprogressRecommendations = ({recommendations, onActionClick}) => {
 
     const handleReset = clearFilters => {
         clearFilters();
-        setFilterState({...filterState, searchText: ''})
+        setFilterState({...filterState, searchText: ''});
     };
 
     useEffect(() => {
-        let tempData = [];
+        const tempData = [];
         recommendations.forEach(itr => {
             tempData.push({...itr, key: itr.id});
         });
-        setTableData(tempData);
-    }, []);
+        const uniqueReqions = uniqueBy(recommendations, 'region').map(r => {
+            return {text: r, value: r};
+        });
+        setRegions(uniqueReqions);
+        setTableData(tempData);        
+    }, [recommendations]);
 
     const handleOnAction = (recommendationId, actionType = 'now') => {
         onActionClick([recommendationId], actionType);
@@ -63,7 +70,7 @@ export const InprogressRecommendations = ({recommendations, onActionClick}) => {
                                 searchedColumn: dataIndex,
                             });
                         }}>
-                        Ok
+                        OK
                     </Button>
                 </Space>
             </div>
@@ -111,37 +118,29 @@ export const InprogressRecommendations = ({recommendations, onActionClick}) => {
             title: 'REGION',
             dataIndex: 'region',
             key: 'region',
-            filters: [
-                {
-                    text: 'us-east-1',
-                    value: 'us-east-1',
-                },
-                {
-                    text: 'us-east-2',
-                    value: 'us-east-2',
-                },
-            ],
+            filters: regions,
             onFilter: (value, record) => record.region.indexOf(value) === 0,
             sorter: (a, b) => a.region.localeCompare(b.region)
         },
         {
-            title: 'SAVINGS $',
+            title: 'SAVINGS',
             dataIndex: 'annualSavings',
             key: 'annualSavings',
+            align: 'right',
             sorter: (a, b) => a.annualSavings - b.annualSavings,
             render: (text, recommendation) => (
-                <div style={{float: 'right'}}>{Number((recommendation.annualSavings).toFixed(0))}</div>
+                <div style={{float: 'right', paddingRight: '20px'}}>${FormatNumber(recommendation.annualSavings)}</div>
             ),
         },
         {
-            title: 'STATUS',
-            dataIndex: 'status',
-            key: 'status',
-            render: status => (
-                <>
-                    <Tag color={'#6993FF'} key={status}>{status.toUpperCase()}</Tag>
-                </>
-            )
+            title: 'EXEC TIME (Local)',
+            dataIndex: 'lastUpdatedDate',
+            key: 'lastUpdatedDate',
+            width: "60",
+            sorter: (a, b) => a.lastUpdatedDate - b.lastUpdatedDate,
+            render: (text, recommendation) => (
+                <div>{recommendation.lastUpdatedDate && new Date(recommendation.lastUpdatedDate).toLocaleString()}</div>
+            ),
         },
         {
             title: 'ACTION',
@@ -166,7 +165,11 @@ export const InprogressRecommendations = ({recommendations, onActionClick}) => {
                     <p>Nothing In Progress now! Go to new recommendations tab to get started.</p>
                 ) : (
                     <div className="table-responsive">
-                        <Table bordered pagination={false} columns={columns} dataSource={tableData}/>
+                        <Table 
+                            bordered 
+                            pagination={{pageSize: 10}} 
+                            columns={columns} 
+                            dataSource={tableData} />
                     </div>
                 )
             }
