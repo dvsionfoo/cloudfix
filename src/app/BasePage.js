@@ -10,6 +10,7 @@ import { Logout } from "./pages/Logout";
 import { Instructions } from './pages/Instructions';
 import { ArnDetails } from './pages/ArnDetails';
 import Accounts from './pages/Accounts';
+import Users from './pages/Users';
 import  { Setup } from './pages/Setup';
 import { Home  } from './pages/Home';
 import LinkAccount from './pages/LinkAccount';
@@ -34,6 +35,7 @@ export default function BasePage() {
         <ContentRoute path="/instructions" component={Instructions}/>
         <ContentRoute path="/arn-details" component={ArnDetails}/>
         <ContentRoute path="/accounts" component={Accounts}/>
+        <ContentRoute path="/users" component={Users}/>
         <ContentRoute path="/setup" component={Setup}/>
         <ContentRoute path="/change-password" component={ChangePassword} />
         <Redirect to="error/" />

@@ -10,6 +10,7 @@ export const LOCAL_STORAGE_KEY = 'cloudFix';
 export const SAVINGS_URL = "/api/v1/ui/saving-summary";
 export const GET_ACCOUNTS_URL = "/api/v1/accounts";
 export const GET_USER_DETAILS = "/api/v1/auth/user";
+export const GET_USERS = "/api/v1/users";
 export const SCHEDULE_EVENT_URL = "/api/v1/ui/update-status";
 export const FUTURE_SCHEDULE_TIME =  20;
 export const GET_RUN_TEMPLATE_URL = "/api/v1/tenants/cf";
@@ -21,7 +22,8 @@ export const HUBSPOT_LEAD_API_PORTALID = '4572587';
 export const HUBSPOT_LEAD_API_FORMID = '3b5279db-7aca-4415-b697-c4ee1536e762';
 export const APP_DOMAIN = 'cloudfix.devgraph.com';
 export const RECOMMENDATION_TYPES_URL = {
-    'gp2gp3':  'https://www.devgraph.com/cloudfix-help/ebs-gp2-to-gp3/'
+    'gp2gp3':  'https://www.devgraph.com/cloudfix-help/ebs-gp2-to-gp3/',
+    'iotogp3':  'https://www.devgraph.com/cloudfix-help/ebs-volume-cost-optimizations-io1-io2-to-gp3/'
 };
 export const RISK_LEVELS = [
     'No Risk', 'Very Low', 'Low', 'Medium', 'High', 'Very High'

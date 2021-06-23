@@ -56,7 +56,11 @@ function Topbar(props) {
        <>
       <div>
                 
-          { totalAccounts > 0 && locationName === 'dashboard' && <Button className="accounts-count-btn" variant="outline-primary" href="/#accounts" size="sm">AWS Accounts <Badge variant="success">{totalAccounts}</Badge></Button>}
+          { totalAccounts > 0 && locationName === 'dashboard' && <React.Fragment>
+            <Button className="accounts-count-btn" variant="outline-primary" href="/#users" size="sm" style={{marginRight: '10px'}}>Users</Button>
+            <Button className="accounts-count-btn" variant="outline-primary" href="/#accounts" size="sm">AWS Accounts <Badge variant="success">{totalAccounts}</Badge></Button>
+            </React.Fragment>}
+          { locationName === 'users' && <Button className="accounts-count-btn" variant="outline-primary" href="/#dashboard" size="sm">Recommendations</Button>}
           { totalAccounts > 0 && locationName === 'accounts' && <Button className="accounts-count-btn" variant="outline-primary" href="/#dashboard" size="sm">Recommendations</Button>}
           { totalAccounts > 0 && locationName === 'link-account' && <Button className="accounts-count-btn" variant="outline-primary" href="/#dashboard" size="sm">Recommendations</Button>}
          

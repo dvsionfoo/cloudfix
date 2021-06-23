@@ -139,6 +139,12 @@ const getScheduledDate = (date = undefined) => {
           </span>
         </h3>
         { loading && (<p className="recommendationsLoader">{error} <span className="ml-6 spinner spinner-white"></span></p>) }
+        <Button
+          className="btn btn-outline-primary font-size-sm refresh-recommendations-btn"
+          onClick={refetchRecommendations}
+        ><Icon className="fa fa-sync" />
+          Refresh Recommendations {loading && <span className="ml-3 spinner spinner-white"></span>}
+        </Button>
         <div className="card-toolbar">
           <Tab.Container defaultActiveKey={key}>
             <Nav
@@ -184,12 +190,6 @@ const getScheduledDate = (date = undefined) => {
               </Nav.Item>
             </Nav>
           </Tab.Container>
-          <Button
-            className="btn btn-outline-primary font-weight-bolder font-size-sm refresh-recommendations-btn"
-            onClick={refetchRecommendations}
-          ><Icon className="fa fa-sync" />
-            Refresh Recommendations {loading && <span className="ml-3 spinner spinner-white"></span>}
-          </Button>
         </div>
       </div>
       {/* end::Header */}

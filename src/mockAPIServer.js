@@ -4,7 +4,7 @@ import {
     REGISTER_URL, LOGIN_URL, RECOMMENDATIONS_URL,
     SAVINGS_URL, GET_RUN_TEMPLATE_URL, GET_ACCOUNTS_URL,
     GET_USER_DETAILS, SCHEDULE_EVENT_URL, FORGOT_PASSWORD_URL,
-    CHANGE_PASSWORD_URL, LOGOUT_URL, FORGOT_PASSWORD_RESET_URL, MOCK_ERROR, REFRESH_URL
+    CHANGE_PASSWORD_URL, LOGOUT_URL, FORGOT_PASSWORD_RESET_URL, MOCK_ERROR, REFRESH_URL, GET_USERS
 } from './app/appConfig';
 
 let attempt = 0;
@@ -110,6 +110,49 @@ var mockServer = {
                 url: "http://www.google.com"
             };
             return response;
+        });
+
+        this.get(GET_USERS, () => {
+            const response = [{
+                username: "emre.sener+testmultiuser@trilogy.com",
+                name: "Emre Multi User 1",
+                company: "Crossover 1",
+                phone: "+905420000001",
+                role: "TENANT_ADMIN",
+                id: 1
+            }, {
+                username: "emre.sener+testmultiuser2@trilogy.com",
+                name: "Emre Multi User 2",
+                company: "Crossover 2",
+                phone: "+905420000001",
+                role: "TENANT_ADMIN",
+                id: 2
+            },{
+                username: "emre.sener+testmultiuser3@trilogy.com",
+                name: "Emre Multi User 3",
+                company: "Crossover 3",
+                phone: "+905420000001",
+                role: "TENANT_ADMIN",
+                id: 3
+            }];
+            return response;
+        });
+
+        this.delete(GET_USERS + '/:id', () => {
+            const response = [];
+            return response;
+        });
+
+        this.post(GET_USERS, (schema, request) => {
+            let response = JSON.parse(request.requestBody);
+            response.id = 5;
+            return response
+        });
+
+        this.put(GET_USERS + '/:id', (schema, request) => {
+            let response = JSON.parse(request.requestBody);
+            response.id = 5;
+            return response
         });
 
         this.get(LOGOUT_URL, () => {
@@ -1411,7 +1454,7 @@ var mockServer = {
             const response = {
                 savings: {
                     realized: 100000,
-                    recommended: 1000000
+                    recommended: 88300
                 }
             }
             return response;

@@ -214,7 +214,7 @@ export const ScheduledRecommendations = ({recommendations, onActionClick}) => {
                             <Table 
                                 bordered 
                                 rowSelection={{...rowSelection}}
-                                pagination={{pageSize: 10}}
+                                pagination={{pageSize: 10, showSizeChanger: false, hideOnSinglePage: true}}
                                 columns={columns}
                                 dataSource={tableData} />
                         </div>

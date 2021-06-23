@@ -166,7 +166,7 @@ export const CompletedRecommendations = ({recommendations, onActionClick}) => {
                     <p>No fixes! Go to new recommendations tab to get started.</p>
                 ) : (
                     <Table 
-                        pagination={{pageSize: 10}} 
+                        pagination={{pageSize: 10, showSizeChanger: false, hideOnSinglePage: true}} 
                         bordered 
                         columns={columns} 
                         dataSource={tableData} 

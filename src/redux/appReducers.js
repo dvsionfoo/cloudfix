@@ -8,7 +8,8 @@ export const actionTypes = {
   Recommendations: "[Recommendations] Action",
   Savings: "[Savings] Action",
   Accounts: "[Accounts] Action",
-  User: "[User] Action"
+  User: "[User] Action",
+  SetUsers: "[Set Users] Action"
 };
 
 const userAuthData = JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY));
@@ -31,6 +32,7 @@ const initialAuthState = {
   recommendedSavings: 0,
   realizedSavings: 0,
   accounts: undefined,
+  users: undefined
 };
 
 const enrichedAuthState = {...initialAuthState, ...userAuthData};
@@ -84,6 +86,11 @@ export const reducer = (state = enrichedAuthState, action) => {
         return { ...state, accounts, totalAccounts: accounts.length };
       }
 
+      case actionTypes.SetUsers: {
+        const users = action.payload;
+        return { ...state, users };
+      }
+
       default:
         return state;
     }
@@ -100,6 +107,7 @@ export const actions = {
   savings: (savings) => ({ type: actionTypes.Savings, payload: savings }),
   accounts: (accounts) => ({ type: actionTypes.Accounts, payload: accounts }),
   user: (userDetails) => ({ type: actionTypes.User, payload: userDetails }),
+  setUsers: (users) => ({ type: actionTypes.SetUsers, payload: users }),
 };
 
 export function* saga() {

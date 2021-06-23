@@ -10,9 +10,10 @@ body {
   background-size: contain;
 }
 
-.header  {
+.header {
   background-color: #F4F4F4;
 }
+
 #kt_content.dashboard .container {
   background: none;
   box-shadow: none;
@@ -22,12 +23,14 @@ body {
   background: rgba(238, 241, 245, 0.42);
 }
 
-.ant-btn .anticon svg{
+.ant-btn .anticon svg {
   margin-bottom: 4px;
 }
-.scheduledSelection{
+
+.scheduledSelection {
   margin-right: 8px;
-  img{
+
+  img {
     margin: 0 4px 2px 0;
   }
 }
@@ -36,12 +39,14 @@ body {
   &.register {
     height: auto;
   }
+
   width: 100%;
   height: 110vh;
   background: #037ADE url("/media/bg/site-bg.png") no-repeat;
   background-size: cover;
   display: flex;
   align-items: center;
+
   .left {
     background-color: #fff;
     width: 400px;
@@ -51,6 +56,7 @@ body {
 
     .leftContent {
       width: 350px;
+
       h1 {
         font-size: 20px;
         line-height: 24px;
@@ -58,6 +64,7 @@ body {
         color: #037ADE;
         margin-top: 40px;
       }
+
       h2.sub-heading {
         font-style: normal;
         font-weight: normal;
@@ -65,64 +72,77 @@ body {
         line-height: 15px;
         color: #A8A8C6;
       }
+
       p {
         font-size: 13px;
         line-height: 15px;
         color: #A8A8C6;
       }
+
       label {
         color: #72729A;
       }
+
       .login-form {
         margin-top: 20px;
       }
+
       .action-btn {
         margin-bottom: 10px;
+
         button {
           width: 100%;
         }
       }
+
       .link {
         color: #037ADE;
         font-size: 12px;
       }
     }
   }
+
   .right {
     flex: 1;
     display: flex;
     flex-direction: column;
     background: #E6FAFF;
+
     .rightContent {
       align-items: center;
       width: 500px;
       margin: 100px auto 20px auto;
+
       .could-fix-carousel {
         min-width: 330px;
         min-height: 250px;
         margin-top: 50px;
         color: #72729A;
-        .carousel-indicators{
+
+        .carousel-indicators {
           bottom: -50px;
+
           li {
             width: 10px;
             height: 10px;
             border-radius: 100%;
             background-color: rgba(114, 114, 154, 0.42);
           }
-        } 
+        }
+
         .carousel-control-prev.carousel-control-next {
           color: red;
         }
-        
+
         h3 {
-            font-size: 24px;
-            line-height: 28px;
-            text-align: center;
-            color: #72729A;
-            font-weight: 500;
+          font-size: 24px;
+          line-height: 28px;
+          text-align: center;
+          color: #72729A;
+          font-weight: 500;
         }
       }
+
       h2 {
         font-size: 34px;
         line-height: 36px;
@@ -130,12 +150,14 @@ body {
         color: #037ADE;
         font-weight: 500;
       }
+
       p {
         font-size: 16px;
         line-height: 19px;
         text-align: center;
         color: #72729A;
         margin-top: 20px;
+
         &.compact-footer {
           font-size: 12px;
           line-height: 14px;
@@ -146,6 +168,7 @@ body {
       }
     }
   }
+
   .header-logo {
     img {
       position: relative;
@@ -153,20 +176,23 @@ body {
     }
   }
 }
+
 #kt_header {
   height: 70px;
 }
+
 .example-highlight > pre {
   background: none transparent !important;
   margin: 0 !important;
-  padding-top: 0.5rem; 
-  code { 
-      overflow-y: auto;
-      display: block;
+  padding-top: 0.5rem;
 
-      span {
-        background: none transparent !important;
-      }
+  code {
+    overflow-y: auto;
+    display: block;
+
+    span {
+      background: none transparent !important;
+    }
   }
 }
 
@@ -192,12 +218,12 @@ body {
 .react-bootstrap-table {
   th {
     outline: none;
-   
-    &.sortable {  
+
+    &.sortable {
       .svg-icon-sort {
         opacity: 0;
       }
-  
+
       &:hover {
         cursor: pointer;
 
@@ -205,12 +231,12 @@ body {
           opacity: 1;
         }
       }
-    }    
+    }
   }
 
   .table.table-head-custom thead tr {
     .sortable-active {
-        color: $primary !important;
+      color: $primary !important;
     }
   }
 }
@@ -246,6 +272,7 @@ body {
     text-align: center;
     margin-top: 15px;
   }
+
   h2 {
     font-size: 17px;
     color: #037ADE;
@@ -256,13 +283,15 @@ body {
   p {
     font-size: 12px;
     line-height: 20px;
-    color:rgba(114, 114, 154, 0.8);
+    color: rgba(114, 114, 154, 0.8);
     margin: 0;
   }
+
   .spinner {
     left: 15%;
     display: block;
   }
+
   .spinner.spinner:before {
     width: 2rem;
     height: 2rem;
@@ -288,9 +317,11 @@ img.actionLink {
 .recommendations {
   .card-body {
     min-height: 400px;
+
     .actionLink {
       margin-right: 8px;
       cursor: pointer;
+
       &.disabled {
         opacity: 0.2;
         cursor: not-allowed;
@@ -321,9 +352,11 @@ img.actionLink {
 
 .modal .modal-header .modal-title {
   color: #037ADE;
+
   h3 {
     margin-bottom: 20px;
   }
+
   p {
     color: #464E5F;
     font-size: 14px;
@@ -334,9 +367,10 @@ h1, h2, h3 {
   color: #037ADE;
 }
 
-.card.card-custom .card-header .card-title  {
+.card.card-custom .card-header .card-title {
   color: #037ADE;
   margin-bottom: 10px;
+
   .card-label {
     color: #037ADE;
   }
@@ -344,7 +378,7 @@ h1, h2, h3 {
 
 .nav.nav-pills .nav-link {
   color: #464E5F;
-  
+
 }
 
 .nav.nav-pills .show > .nav-link, .nav.nav-pills .nav-link.active {
@@ -360,30 +394,35 @@ h1, h2, h3 {
   background: #FFFFFF;
   box-shadow: 0px 0px 35px rgba(181, 181, 195, 0.15);
   border-radius: 6px;
+
   .aws-connect {
     width: 350px;
     margin: auto;
     text-align: center;
     padding-top: 70px;
+
     img {
       margin-bottom: 20px;
     }
+
     h1 {
       font-size: 16px;
       line-height: 19px;
       margin-bottom: 20px;
-text-align: center;
-color: #72729A;
+      text-align: center;
+      color: #72729A;
     }
+
     p {
       font-size: 12px;
-line-height: 14px;
-text-align: center;
+      line-height: 14px;
+      text-align: center;
 
-color: #72729A;
-a {
-  color: #037ADE;
-}
+      color: #72729A;
+
+      a {
+        color: #037ADE;
+      }
     }
   }
 
@@ -393,24 +432,29 @@ a {
     background-color: rgba(247, 229, 151, 0.3);
     padding: 30px;
     margin-bottom: 50px;
+
     h2 {
       font-weight: 500;
       font-size: 18px;
       line-height: 21px;
       color: #473150;
     }
+
     button {
       width: 230px;
     }
+
     p {
       font-size: 12px;
       line-height: 14px;
       color: #72729A;
       margin-bottom: 0;
+
       &.errorMessage {
         color: red;
       }
     }
+
     .run {
       text-align: center;
     }
@@ -439,9 +483,11 @@ a {
 
 table th.bulkActions {
   padding: 5px;
+
   button {
     margin-right: 10px;
   }
+
   img {
     margin-right: 5px;
   }
@@ -457,12 +503,16 @@ table th.bulkActions {
   .card.card-custom > .card-header .card-toolbar {
     margin-top: 0;
   }
+
   margin-top: 20px;
+
   button {
     margin-left: 20px;
+
     span.spinner {
       margin-right: 15px;
     }
+
     span {
       margin-right: 10px;
       width: 15px;
@@ -472,6 +522,7 @@ table th.bulkActions {
       top: 5px;
     }
   }
+
   .actionLink {
     margin-left: 10px;
   }
@@ -500,6 +551,7 @@ p.addAccountsClose {
 .user-dropdown {
   margin-left: 40px;
 }
+
 .abbr {
   span.abbr-text {
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -516,6 +568,7 @@ p.addAccountsClose {
     width: 36px;
     display: inline-block;
   }
+
   span.welcome-text {
     font-size: 13px;
     line-height: 13px;
@@ -548,6 +601,7 @@ p.addAccountsClose {
   width: 500px;
   padding: 40px 20px;
   margin: auto;
+
   .btn {
     width: 100%;
   }
@@ -555,6 +609,7 @@ p.addAccountsClose {
 
 .parameters {
   width: 400px;
+
   h5 {
     color: #037ADE;
     margin-left: 10px;
@@ -565,6 +620,7 @@ p.addAccountsClose {
   height: 36px;
   line-height: 22px;
 }
+
 .ant-table-column-sorter-full {
   margin-bottom: 4px;
 }
@@ -572,6 +628,7 @@ p.addAccountsClose {
 .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td {
   padding: 5px 6px;
 }
+
 .ant-table-column-sorters {
   padding: 10px;
 }
@@ -579,6 +636,7 @@ p.addAccountsClose {
 .ant-table.ant-table-bordered > .ant-table-container {
   border: none;
 }
+
 .ant-table.ant-table-bordered > .ant-table-container > .ant-table-content > table > tbody > tr > td {
   border-left: none;
   border-right: none;
@@ -597,8 +655,10 @@ p.addAccountsClose {
 }
 
 .refresh-recommendations-btn {
-  margin-left: auto;
-  order: 2;
+  position: absolute;
+  top: 15px;
+  right: 30px;
+
   span {
     margin-right: 10px;
     width: 15px;
@@ -606,6 +666,7 @@ p.addAccountsClose {
     font-size: 15px;
     position: relative;
     top: 5px;
+
     &.spinner {
       top: 0;
     }
@@ -614,7 +675,103 @@ p.addAccountsClose {
 
 .ant-table-wrapper, .ant-spin-container, .ant-table, .ant-table.ant-table-bordered, .ant-table.ant-table-bordered > .ant-table-container, .ant-table-container, .ant-table-content {
   overflow: hidden;
+
   table {
     overflow: hidden;
+  }
+}
+
+.action-icons span {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.billingAccounts {
+  height: calc(100vh - 364px);
+
+  .grid {
+    display: grid;
+    grid-template-rows: 28% 25% auto;
+    grid-row-gap: 24px;
+
+    .subAccounts {
+      display: grid;
+      grid-template-columns: 45% auto;
+      grid-column-gap: 24px;
+    }
+  }
+}
+
+.disconnectModal {
+  .ant-modal-body {
+    padding-top: 0;
+  }
+}
+
+.connectModal {
+  .ant-modal-content {
+    height: calc(60vh - 120px);
+
+    .flexCenter {
+      display: flex;
+      justify-content: center;
+    }
+
+
+    .ant-modal-body {
+      display: grid;
+      grid-template-rows: 20% 20% 18% 8px;
+      grid-row-gap: 16px;
+
+      .awsIcon {
+        @extend .flexCenter;
+      }
+
+      .title {
+        @extend .flexCenter;
+      }
+
+      .para {
+        width: 75%;
+        align-self: center;
+
+        span {
+          color: #5d78ff;
+          cursor: pointer;
+        }
+      }
+
+      .connectText {
+        @extend .flexCenter;
+        flex-direction: column;
+      }
+
+      .templateNav {
+        background: beige;
+        margin: 0 -24px;
+
+        .content {
+          padding: 4px;
+          display: grid;
+          grid-template-columns: 53% auto;
+          grid-column-gap: 16px;
+
+          .expansion {
+            width: 100%;
+          }
+
+          .leftContent {
+            @extend .flexCenter;
+            flex-direction: column;
+          }
+
+          .rightContent {
+            @extend .flexCenter;
+            flex-direction: column;
+
+          }
+        }
+      }
+    }
   }
 }

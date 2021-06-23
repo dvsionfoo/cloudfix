@@ -167,7 +167,7 @@ export const InprogressRecommendations = ({recommendations, onActionClick}) => {
                     <div className="table-responsive">
                         <Table 
                             bordered 
-                            pagination={{pageSize: 10}} 
+                            pagination={{pageSize: 10, showSizeChanger: false, hideOnSinglePage: true}} 
                             columns={columns} 
                             dataSource={tableData} />
                     </div>
